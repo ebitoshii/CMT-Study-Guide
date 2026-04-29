@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMT Study Guide — Chartered Market Technician</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #16161f;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8e8f0;
+  --text2: #9898b0;
+  --text3: #5a5a70;
+  --accent: #6366f1;
+  --accent2: #818cf8;
+  --accentL: rgba(99,102,241,0.12);
+  --green: #22c55e;
+  --greenL: rgba(34,197,94,0.1);
+  --amber: #f59e0b;
+  --amberL: rgba(245,158,11,0.1);
+  --red: #ef4444;
+  --redL: rgba(239,68,68,0.1);
+  --teal: #14b8a6;
+  --tealL: rgba(20,184,166,0.1);
+  --pink: #ec4899;
+  --pinkL: rgba(236,72,153,0.1);
+  --radius: 10px;
+  --sidebar-w: 260px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;display:flex;min-height:100vh}
+
+/* ─── SIDEBAR ─────────────────────────────────────── */
+#sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:var(--bg2);border-right:1px solid var(--border);
+  position:fixed;top:0;left:0;height:100vh;overflow-y:auto;
+  display:flex;flex-direction:column;z-index:100;
+  scrollbar-width:thin;scrollbar-color:var(--border2) transparent;
+}
+#sidebar::-webkit-scrollbar{width:4px}
+#sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.sidebar-logo{
+  padding:24px 20px 16px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.sidebar-logo .brand{
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:800;
+  background:linear-gradient(135deg,var(--accent2),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:-0.02em;
+}
+.sidebar-logo .sub{font-size:11px;color:var(--text3);margin-top:2px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase}
+.nav-section{padding:16px 0 8px}
+.nav-label{
+  font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text3);padding:0 20px 6px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 20px;cursor:pointer;
+  font-size:13px;color:var(--text2);
+  transition:all 0.15s;border:none;background:none;width:100%;text-align:left;
+  position:relative;
+}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,0.04)}
+.nav-item.active{color:var(--accent2);background:var(--accentL)}
+.nav-item.active::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);
+}
+.nav-dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:0.5;flex-shrink:0}
+
+/* ─── MAIN ────────────────────────────────────────── */
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh}
+.page{display:none;padding:40px 48px;max-width:960px}
+.page.active{display:block}
+
+/* ─── PAGE HEADER ─────────────────────────────────── */
+.page-header{margin-bottom:40px}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;margin-bottom:14px;
+}
+.badge-l1{background:var(--accentL);color:var(--accent2);border:1px solid rgba(99,102,241,0.3)}
+.badge-l2{background:var(--greenL);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
+.badge-l3{background:var(--amberL);color:var(--amber);border:1px solid rgba(245,158,11,0.3)}
+.badge-all{background:var(--tealL);color:var(--teal);border:1px solid rgba(20,184,166,0.3)}
+.page-title{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:10px;line-height:1.2}
+.page-subtitle{font-size:15px;color:var(--text2);max-width:680px;line-height:1.7}
+
+/* ─── CARDS ───────────────────────────────────────── */
+.card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;
+}
+.card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px;color:var(--text)}
+.card-body{font-size:14px;color:var(--text2);line-height:1.75}
+.card-body p{margin-bottom:10px}
+.card-body p:last-child{margin-bottom:0}
+
+/* accent cards */
+.card-accent-blue{border-color:rgba(99,102,241,0.3);background:linear-gradient(135deg,rgba(99,102,241,0.06),var(--bg2))}
+.card-accent-green{border-color:rgba(34,197,94,0.25);background:linear-gradient(135deg,rgba(34,197,94,0.05),var(--bg2))}
+.card-accent-amber{border-color:rgba(245,158,11,0.25);background:linear-gradient(135deg,rgba(245,158,11,0.05),var(--bg2))}
+.card-accent-red{border-color:rgba(239,68,68,0.25);background:linear-gradient(135deg,rgba(239,68,68,0.05),var(--bg2))}
+.card-accent-teal{border-color:rgba(20,184,166,0.25);background:linear-gradient(135deg,rgba(20,184,166,0.05),var(--bg2))}
+
+/* ─── GRID ────────────────────────────────────────── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+
+/* ─── DEF TABLE ───────────────────────────────────── */
+.def-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.def-table tr{border-bottom:1px solid var(--border)}
+.def-table tr:last-child{border-bottom:none}
+.def-table td{padding:11px 14px;vertical-align:top}
+.def-table td:first-child{
+  font-weight:500;color:var(--text);min-width:160px;max-width:200px;
+  padding-right:20px;white-space:nowrap;
+}
+.def-table td:last-child{color:var(--text2)}
+
+/* ─── FORMULA ─────────────────────────────────────── */
+.formula{
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);
+  border-radius:8px;padding:12px 16px;color:var(--accent2);
+  margin:12px 0;white-space:pre-wrap;
+}
+
+/* ─── CALLOUT BOXES ───────────────────────────────── */
+.callout{
+  border-left:3px solid;border-radius:0 8px 8px 0;
+  padding:14px 16px;margin:12px 0;
+}
+.callout-blue{border-color:var(--accent);background:var(--accentL)}
+.callout-green{border-color:var(--green);background:var(--greenL)}
+.callout-amber{border-color:var(--amber);background:var(--amberL)}
+.callout-red{border-color:var(--red);background:var(--redL)}
+.callout-title{font-weight:600;font-size:13px;margin-bottom:4px}
+.callout-blue .callout-title{color:var(--accent2)}
+.callout-green .callout-title{color:var(--green)}
+.callout-amber .callout-title{color:var(--amber)}
+.callout-red .callout-title{color:var(--red)}
+.callout-body{font-size:13px;color:var(--text2)}
+
+/* ─── TAG PILLS ───────────────────────────────────── */
+.tag{
+  display:inline-block;font-size:11px;padding:3px 9px;border-radius:4px;
+  margin:2px;background:rgba(255,255,255,0.06);color:var(--text2);border:1px solid var(--border);
+}
+
+/* ─── INTERACTIVE CONTROLS ────────────────────────── */
+.control-panel{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;margin-bottom:16px;
+}
+.cp-header{
+  padding:14px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cp-title{font-size:14px;font-weight:500}
+.cp-body{padding:20px}
+.slider-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.slider-label{font-size:12px;color:var(--text2);min-width:110px}
+.slider-val{font-size:12px;font-weight:500;min-width:44px;text-align:right;font-family:'JetBrains Mono',monospace;color:var(--accent2)}
+input[type=range]{
+  flex:1;appearance:none;height:4px;border-radius:2px;
+  background:var(--border2);outline:none;
+}
+input[type=range]::-webkit-slider-thumb{
+  appearance:none;width:14px;height:14px;border-radius:50%;
+  background:var(--accent);cursor:pointer;
+}
+.tab-row{display:flex;gap:4px}
+.tab-btn{
+  padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer;
+  border:1px solid var(--border);background:none;color:var(--text2);
+  transition:all 0.15s;font-family:'Inter',sans-serif;
+}
+.tab-btn:hover{background:rgba(255,255,255,0.05)}
+.tab-btn.active{background:var(--accent);color:white;border-color:var(--accent)}
+
+/* ─── METRIC CARDS ────────────────────────────────── */
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:16px 0}
+.metric{background:var(--bg3);border-radius:8px;padding:14px 16px;border:1px solid var(--border)}
+.metric-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;font-weight:500}
+.metric-val{font-size:22px;font-weight:600;font-family:'Syne',sans-serif}
+.metric-val.blue{color:var(--accent2)}
+.metric-val.green{color:var(--green)}
+.metric-val.amber{color:var(--amber)}
+.metric-val.red{color:var(--red)}
+
+/* ─── SECTION DIVIDER ─────────────────────────────── */
+.section-divider{
+  display:flex;align-items:center;gap:12px;margin:28px 0 20px;
+}
+.section-divider span{
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);white-space:nowrap;
+}
+.section-divider::before,.section-divider::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+
+/* ─── HOME PAGE ───────────────────────────────────── */
+.level-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+  padding:28px;cursor:pointer;transition:all 0.2s;
+}
+.level-card:hover{transform:translateY(-3px);border-color:var(--border2)}
+.level-num{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;line-height:1;margin-bottom:10px}
+.level-card.l1 .level-num{
+  background:linear-gradient(135deg,var(--accent2),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.level-card.l2 .level-num{
+  background:linear-gradient(135deg,var(--green),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.level-card.l3 .level-num{
+  background:linear-gradient(135deg,var(--amber),#f97316);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.level-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px}
+.level-desc{font-size:13px;color:var(--text2);line-height:1.6}
+.level-meta{margin-top:16px;font-size:12px;color:var(--text3);display:flex;gap:16px}
+.level-meta span{display:flex;align-items:center;gap:4px}
+
+/* ─── PATTERN CARDS ───────────────────────────────── */
+.pattern-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.pattern-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;cursor:pointer;
+  transition:all 0.15s;
+}
+.pattern-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.pattern-card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.pattern-canvas-wrap{background:var(--bg3);height:100px;position:relative;overflow:hidden}
+.pattern-canvas-wrap canvas{position:absolute;top:0;left:0;width:100%;height:100%}
+.pattern-info{padding:10px 12px}
+.pattern-name{font-size:12px;font-weight:600;color:var(--text)}
+.pattern-tag{font-size:10px;margin-top:3px}
+.bullish-tag{color:var(--green)}
+.bearish-tag{color:var(--red)}
+.neutral-tag{color:var(--amber)}
+
+/* ─── CHARTS ──────────────────────────────────────── */
+.chart-wrap{position:relative;width:100%;margin:12px 0}
+
+/* ─── FIBONACCI TABLE ─────────────────────────────── */
+.fib-bar{height:6px;border-radius:3px;margin-top:4px}
+
+/* ─── WAVE LABELS ─────────────────────────────────── */
+.wave-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700;
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────── */
+@media(max-width:900px){
+  :root{--sidebar-w:0px}
+  #sidebar{display:none}
+  #main{margin-left:0}
+  .page{padding:24px 20px}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .pattern-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ─── SCROLLBAR ───────────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ─── CANVAS DARK OVERRIDE ────────────────────────── */
+canvas{display:block}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">CMT Guide</div>
+    <div class="sub">Chartered Market Technician</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Overview</div>
+    <button class="nav-item active" onclick="nav('home',this)"><span class="nav-dot"></span>Introduction</button>
+    <button class="nav-item" onclick="nav('ethics',this)"><span class="nav-dot"></span>Ethics & Standards</button>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Level I — Foundations</div>
+    <button class="nav-item" onclick="nav('dow',this)"><span class="nav-dot"></span>Dow Theory</button>
+    <button class="nav-item" onclick="nav('charts',this)"><span class="nav-dot"></span>Chart Types & Construction</button>
+    <button class="nav-item" onclick="nav('trends',this)"><span class="nav-dot"></span>Trends, S&R & Breakouts</button>
+    <button class="nav-item" onclick="nav('movingavg',this)"><span class="nav-dot"></span>Moving Averages</button>
+    <button class="nav-item" onclick="nav('barcharts',this)"><span class="nav-dot"></span>Bar Chart Patterns</button>
+    <button class="nav-item" onclick="nav('shortterm',this)"><span class="nav-dot"></span>Short-Term Patterns</button>
+    <button class="nav-item" onclick="nav('volume',this)"><span class="nav-dot"></span>Volume Analysis</button>
+    <button class="nav-item" onclick="nav('candlesticks',this)"><span class="nav-dot"></span>Candlestick Charting</button>
+    <button class="nav-item" onclick="nav('pnf',this)"><span class="nav-dot"></span>Point & Figure Charts</button>
+    <button class="nav-item" onclick="nav('confirmation',this)"><span class="nav-dot"></span>Confirmation</button>
+    <button class="nav-item" onclick="nav('cycles',this)"><span class="nav-dot"></span>Cycles</button>
+    <button class="nav-item" onclick="nav('marketstrength',this)"><span class="nav-dot"></span>Market Strength & Breadth</button>
+    <button class="nav-item" onclick="nav('sentiment',this)"><span class="nav-dot"></span>Sentiment Analysis</button>
+    <button class="nav-item" onclick="nav('emh',this)"><span class="nav-dot"></span>EMH & Behavioural Finance</button>
+    <button class="nav-item" onclick="nav('statistics',this)"><span class="nav-dot"></span>Basic Statistics</button>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Level II — Application</div>
+    <button class="nav-item" onclick="nav('elliott',this)"><span class="nav-dot"></span>Elliott Wave Theory</button>
+    <button class="nav-item" onclick="nav('oscillators',this)"><span class="nav-dot"></span>Oscillators & Momentum</button>
+    <button class="nav-item" onclick="nav('indicators2',this)"><span class="nav-dot"></span>Advanced Indicators</button>
+    <button class="nav-item" onclick="nav('intermarket',this)"><span class="nav-dot"></span>Intermarket Analysis</button>
+    <button class="nav-item" onclick="nav('volatility',this)"><span class="nav-dot"></span>Volatility & Options (VIX)</button>
+    <button class="nav-item" onclick="nav('systemdesign',this)"><span class="nav-dot"></span>System Design & Testing</button>
+    <button class="nav-item" onclick="nav('crypto',this)"><span class="nav-dot"></span>Crypto & Digital Assets</button>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Level III — Integration</div>
+    <button class="nav-item" onclick="nav('riskmanagement',this)"><span class="nav-dot"></span>Risk Management</button>
+    <button class="nav-item" onclick="nav('portfolio',this)"><span class="nav-dot"></span>Portfolio Management</button>
+    <button class="nav-item" onclick="nav('relativestrength',this)"><span class="nav-dot"></span>Relative Strength</button>
+    <button class="nav-item" onclick="nav('assetrelationships',this)"><span class="nav-dot"></span>Asset Relationships</button>
+    <button class="nav-item" onclick="nav('behavioural',this)"><span class="nav-dot"></span>Behavioural Finance (L3)</button>
+    <button class="nav-item" onclick="nav('classical',this)"><span class="nav-dot"></span>Classical Methods Review</button>
+    <button class="nav-item" onclick="nav('performance',this)"><span class="nav-dot"></span>Performance Measurement</button>
+  </div>
+</nav>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main id="main">
+
+<!-- ─── HOME ─── -->
+<section id="page-home" class="page active">
+  <div class="page-header">
+    <div class="badge badge-all">CMT Association</div>
+    <div class="page-title">Chartered Market Technician</div>
+    <div class="page-subtitle">A comprehensive, interactive study guide covering all three exam levels — from foundational theory and chart analysis to advanced portfolio integration and risk management.</div>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-title">CFA Charterholder Advantage</div>
+    <div class="callout-body">The CMT Association and CFA Institute have a reciprocal ethics waiver. As a CFA charterholder, you can apply for a waiver of the CMT ethics component. Both programmes also adopt the CFA Institute Code of Ethics and Standards of Professional Conduct.</div>
+  </div>
+
+  <div class="section-divider"><span>Exam Structure</span></div>
+
+  <div class="grid-3">
+    <div class="level-card l1" onclick="nav('dow',document.querySelector('[onclick*=dow]'))">
+      <div class="level-num">I</div>
+      <div class="level-title">Foundations</div>
+      <div class="level-desc">Introductory concepts, chart types, trend analysis, patterns, volume, candlesticks, cycles, breadth, and basic statistics.</div>
+      <div class="level-meta">
+        <span>132 questions</span>
+        <span>2 hours</span>
+      </div>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:4px">
+        <span class="tag">Dow Theory</span><span class="tag">Patterns</span><span class="tag">Candlesticks</span><span class="tag">Volume</span><span class="tag">EMH</span><span class="tag">Statistics</span>
+      </div>
+    </div>
+    <div class="level-card l2" onclick="nav('elliott',document.querySelector('[onclick*=elliott]'))">
+      <div class="level-num">II</div>
+      <div class="level-title">Application</div>
+      <div class="level-desc">Applied technical analysis — Elliott Wave, oscillators, intermarket relationships, volatility, system testing, and digital assets.</div>
+      <div class="level-meta">
+        <span>170 questions</span>
+        <span>4 hours</span>
+      </div>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:4px">
+        <span class="tag">Elliott Wave</span><span class="tag">RSI/MACD</span><span class="tag">Intermarket</span><span class="tag">VIX</span><span class="tag">Systems</span>
+      </div>
+    </div>
+    <div class="level-card l3" onclick="nav('riskmanagement',document.querySelector('[onclick*=riskmanagement]'))">
+      <div class="level-num">III</div>
+      <div class="level-title">Integration</div>
+      <div class="level-desc">Integrating TA with portfolio management, risk frameworks, behavioural finance, asset relationships, and performance measurement.</div>
+      <div class="level-meta">
+        <span>Mixed format</span>
+        <span>4 hours</span>
+      </div>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:4px">
+        <span class="tag">Risk Mgmt</span><span class="tag">Portfolio</span><span class="tag">Behavioural</span><span class="tag">Performance</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Reference Books</span></div>
+  <div class="card">
+    <div class="card-title">Key Source Books</div>
+    <table class="def-table">
+      <tr><td>Technical Analysis of Financial Markets</td><td>John Murphy — the primary Level I & II reference. Comprehensive coverage of all classical TA topics.</td></tr>
+      <tr><td>Technical Analysis Explained</td><td>Martin Pring — indicators, market cycles, and intermarket analysis in depth.</td></tr>
+      <tr><td>Japanese Candlestick Charting</td><td>Steve Nison — definitive guide to candlestick patterns and interpretation.</td></tr>
+      <tr><td>Elliott Wave Principle</td><td>Frost & Prechter — the complete reference for wave theory and Fibonacci relationships.</td></tr>
+      <tr><td>Evidence-Based Technical Analysis</td><td>David Aronson — statistical testing of TA signals; critical for Level II/III system design.</td></tr>
+      <tr><td>The Handbook of Technical Analysis</td><td>Mark Lim — broad coverage aligned with the current official curriculum.</td></tr>
+      <tr><td>Technical Analysis: The Complete Resource</td><td>Kirkpatrick & Dahlquist — basis for the official curriculum textbooks.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ─── ETHICS ─── -->
+<section id="page-ethics" class="page">
+  <div class="page-header">
+    <div class="badge badge-all">All Levels</div>
+    <div class="page-title">Ethics & Professional Standards</div>
+    <div class="page-subtitle">All three CMT levels include ethics questions. The CMT Association adopts the CFA Institute Code of Ethics and Standards of Professional Conduct verbatim.</div>
+  </div>
+  <div class="callout callout-amber">
+    <div class="callout-title">CFA Ethics Waiver</div>
+    <div class="callout-body">As a CFA charterholder, you may apply for a waiver of the ethics portion of the CMT Level III exam. Confirm current eligibility with the CMT Association at time of registration.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">The Six Standards of Professional Conduct</div>
+    <table class="def-table">
+      <tr><td>Standard I — Professionalism</td><td>Knowledge of the law; independence and objectivity; misrepresentation; misconduct.</td></tr>
+      <tr><td>Standard II — Integrity of Capital Markets</td><td>Material nonpublic information; market manipulation. Members must not trade or cause others to trade on MNPI.</td></tr>
+      <tr><td>Standard III — Duties to Clients</td><td>Loyalty, prudence, care; fair dealing; suitability; performance presentation; confidentiality.</td></tr>
+      <tr><td>Standard IV — Duties to Employers</td><td>Loyalty; additional compensation; supervisory responsibilities.</td></tr>
+      <tr><td>Standard V — Investment Analysis</td><td>Diligence and reasonable basis; communication with clients; record retention.</td></tr>
+      <tr><td>Standard VI — Conflicts of Interest</td><td>Disclosure; priority of transactions; referral fees.</td></tr>
+    </table>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Technical Analyst Specific Issues</div>
+      <div class="card-body">
+        <p>When issuing research, analysts must have a reasonable basis for recommendations. Using technical signals as the basis is valid provided the methodology is disclosed and consistently applied.</p>
+        <p>Discretionary accounts must be managed with suitability in mind — a trend-following strategy may not be suitable for all clients despite being technically sound.</p>
+        <p>Front-running client orders using technical signals is a violation of Standard III(B) and Standard VI(B).</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Soft Dollar & Disclosure</div>
+      <div class="card-body">
+        <p>Soft dollar arrangements must be disclosed to clients. Using client brokerage to purchase research or tools that benefit the analyst's other clients is permissible only with disclosure.</p>
+        <p>Referral fees from third-party data providers or charting software vendors must be disclosed before or at the time of the engagement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DOW THEORY ─── -->
+<section id="page-dow" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Dow Theory</div>
+    <div class="page-subtitle">Charles Dow's foundational work, published in Wall Street Journal editorials from 1900–1902, remains the bedrock of technical analysis. Refined by William Hamilton and Robert Rhea.</div>
+  </div>
+
+  <div class="section-divider"><span>Six Core Tenets</span></div>
+  <div class="card">
+    <table class="def-table">
+      <tr><td>1. Averages discount everything</td><td>Market prices reflect all known information — fundamentals, expectations, psychology. Nothing can remain hidden from the market for long. This is the EMH parallel in TA.</td></tr>
+      <tr><td>2. Three simultaneous trends</td><td>Primary (months–years), secondary (weeks–months), and minor (days–weeks). Like tides, waves, and ripples on the ocean.</td></tr>
+      <tr><td>3. Three phases of primary trends</td><td>Bull: Accumulation → Public Participation → Distribution. Bear: Distribution → Public Participation → Panic/Capitulation.</td></tr>
+      <tr><td>4. Averages must confirm</td><td>Originally DJIA + DJTA. A new high or low in one average must be confirmed by the other. Non-confirmation is a warning, not a signal on its own.</td></tr>
+      <tr><td>5. Volume confirms the trend</td><td>Volume should expand in the direction of the primary trend and contract on corrections. Divergence between price and volume warns of weakening trend.</td></tr>
+      <tr><td>6. Trend persists until clear reversal</td><td>The benefit of the doubt goes to the prevailing trend. Ambiguous action or isolated reversals are not sufficient to call a trend change.</td></tr>
+    </table>
+  </div>
+
+  <div class="section-divider"><span>Three Phases of a Bull Market</span></div>
+  <div class="grid-3">
+    <div class="card card-accent-blue">
+      <div class="card-title" style="color:var(--accent2)">Phase 1 — Accumulation</div>
+      <div class="card-body">Smart money — institutional investors and insiders — buy depressed assets while public sentiment remains bearish. Price quietly builds a base. Volume is low. News is still negative.</div>
+    </div>
+    <div class="card card-accent-green">
+      <div class="card-title" style="color:var(--green)">Phase 2 — Public Participation</div>
+      <div class="card-body">Improving fundamentals attract trend-following traders. Price trends strongly upward with increasing volume. This is the longest and most profitable phase. Business conditions improve visibly.</div>
+    </div>
+    <div class="card card-accent-red">
+      <div class="card-title" style="color:var(--red)">Phase 3 — Distribution</div>
+      <div class="card-body">Public euphoria peaks. Smart money distributes holdings to latecomers. Volume is high but price advances slow. Divergences appear. Speculative excess is visible. Reversal is imminent.</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="height:200px"><canvas id="dow-chart"></canvas></div>
+
+  <div class="section-divider"><span>Key Concepts</span></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Dow vs. Modern TA</div>
+      <div class="card-body">
+        <p>Dow Theory predates modern indicators but remains valid. The concept of confirmation has expanded — analysts now confirm across timeframes, asset classes, and multiple indicators rather than just two averages.</p>
+        <p>The three-phase framework maps closely to market cycle analysis and sector rotation models used in portfolio management.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Common Exam Traps</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Non-confirmation ≠ reversal signal.</strong> It is a warning that requires follow-through.</p>
+        <p><strong style="color:var(--text);font-weight:500">Minor trends are manipulable</strong> according to Dow — do not trade minor trends alone.</p>
+        <p><strong style="color:var(--text);font-weight:500">Secondary trends retrace</strong> 33–67% of the prior primary move.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CHART TYPES ─── -->
+<section id="page-charts" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Chart Types & Construction</div>
+    <div class="page-subtitle">The method of displaying price data affects what signals are visible. Each chart type has specific strengths and use cases.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Chart Types Comparison</div>
+    <table class="def-table">
+      <tr><td>Line Chart</td><td>Plots closing prices only. Cleanest view of overall trend. Loses intraday information. Best for long-term trend identification and clean visual analysis.</td></tr>
+      <tr><td>Bar Chart (OHLC)</td><td>Open, High, Low, Close. Open = left tick, Close = right tick. The standard chart for Western technical analysis. Shows full price range and direction in each period.</td></tr>
+      <tr><td>Candlestick Chart</td><td>Same data as bar chart but with a colour-coded body (real body). Bullish = close above open, Bearish = close below open. Faster to read visually, reveals sentiment.</td></tr>
+      <tr><td>Point & Figure (P&F)</td><td>Time-independent. Records price movement only — X for rises, O for falls. Eliminates noise, shows pure supply/demand. Uses a box size and reversal amount.</td></tr>
+      <tr><td>Renko Chart</td><td>Time-independent. Brick-based chart using fixed price moves. Smooths out minor fluctuations; shows trend clearly. Named from Japanese word for brick (renga).</td></tr>
+      <tr><td>Kagi Chart</td><td>Japanese. Vertical lines reverse direction only after a defined reversal amount. Thick lines = price above prior high (yang); thin lines = below prior low (yin).</td></tr>
+    </table>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Chart Scales</div>
+      <table class="def-table">
+        <tr><td>Arithmetic (Linear)</td><td>Equal vertical distance = equal price change. Suitable for short-term and range-bound analysis.</td></tr>
+        <tr><td>Logarithmic (Semi-log)</td><td>Equal vertical distance = equal percentage change. Preferred for long-term charts and high-volatility assets. Shows growth in proportion.</td></tr>
+      </table>
+      <div class="callout callout-blue" style="margin-top:12px">
+        <div class="callout-title">Key Rule</div>
+        <div class="callout-body">Use log scale when the price range spans more than 2:1 ratio. Arithmetic scales distort percentage moves at high price levels.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Timeframes</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Tick charts</strong> — every transaction. For scalping and microstructure analysis.</p>
+        <p><strong style="color:var(--text);font-weight:500">Intraday (1m–4h)</strong> — for day traders and short-term swing traders. Most noise; signals require confirmation.</p>
+        <p><strong style="color:var(--text);font-weight:500">Daily</strong> — primary timeframe for most technical analysis. Best balance of signal and noise.</p>
+        <p><strong style="color:var(--text);font-weight:500">Weekly/Monthly</strong> — identifies primary trend. Confirms or contradicts shorter-term signals.</p>
+        <p><strong style="color:var(--text);font-weight:500">Multiple timeframe analysis</strong> — top-down approach: identify trend on higher timeframe, time entries on lower timeframe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRENDS ─── -->
+<section id="page-trends" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Trends, Support, Resistance & Breakouts</div>
+    <div class="page-subtitle">The core principle of technical analysis — markets move in trends. Identifying, defining, and trading within trends is the primary skill of a technical analyst.</div>
+  </div>
+
+  <div class="section-divider"><span>Trend Definitions</span></div>
+  <div class="grid-3">
+    <div class="card card-accent-green">
+      <div class="card-title">Uptrend</div>
+      <div class="card-body">Series of Higher Highs (HH) and Higher Lows (HL). Each rally exceeds the prior rally peak; each pullback holds above the prior pullback low. Broken when price makes a Lower Low.</div>
+    </div>
+    <div class="card card-accent-red">
+      <div class="card-title">Downtrend</div>
+      <div class="card-body">Series of Lower Highs (LH) and Lower Lows (LL). Each rally fails below the prior rally high; each selloff reaches a new low. Broken when price makes a Higher High.</div>
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">Sideways / Ranging</div>
+      <div class="card-body">Price oscillates between established support and resistance with no net directional movement. Often precedes a significant directional move.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Support & Resistance</span></div>
+  <div class="card">
+    <table class="def-table">
+      <tr><td>Support</td><td>A price level where buying interest is sufficient to halt or reverse a decline. Demand zone. The more times a level is tested without breaking, the stronger it becomes.</td></tr>
+      <tr><td>Resistance</td><td>A price level where selling pressure is sufficient to halt or reverse an advance. Supply zone. Previous highs, round numbers, and prior S&R levels all create resistance.</td></tr>
+      <tr><td>Role Reversal</td><td>Once a support level is broken, it typically becomes resistance on any subsequent rally (and vice versa). This is the polarity principle — one of the most reliable phenomena in TA.</td></tr>
+      <tr><td>Round Numbers</td><td>Psychological support/resistance at whole numbers (e.g., $100, $500, $1000). Reinforced by option strike clustering at round strikes.</td></tr>
+    </table>
+  </div>
+
+  <div class="section-divider"><span>Trendlines & Channels</span></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Drawing Valid Trendlines</div>
+      <div class="card-body">
+        <p>Uptrend line: connect two or more swing lows. Third touch confirms validity.</p>
+        <p>Downtrend line: connect two or more swing highs. Third touch confirms.</p>
+        <p>Steeper trendlines (>45°) are more fragile. A 45° trendline is considered ideal and sustainable.</p>
+        <p>A close beyond a trendline is more significant than an intraday pierce. Confirm with volume and follow-through.</p>
+        <p>Fan lines: three successively flatter trendlines after a major reversal signal trend exhaustion.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Price Channels</div>
+      <div class="card-body">
+        <p>A channel draws a parallel line to the main trendline on the opposite side of price. Creates a dynamic price envelope.</p>
+        <p>Failure to reach the upper channel line in an uptrend is a warning of weakness. A break of the lower channel line signals trend reversal.</p>
+        <p>Channels can be used for target setting — projects the expected range of the next swing.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Fibonacci Retracements</span></div>
+  <div class="card">
+    <div class="card-title">Key Fibonacci Levels</div>
+    <div class="card-body" style="margin-bottom:16px">Derived from the Golden Ratio (1.618). Applied to a prior swing move to identify potential reversal zones on the pullback.</div>
+    <table class="def-table">
+      <tr><td>23.6%</td><td>Shallow. Common in strong impulsive moves where pullbacks are brief. Barely noticeable on a chart.</td></tr>
+      <tr><td>38.2%</td><td>Moderate retracement. Often seen in strong trends. Typical Wave 4 target in Elliott Wave.</td></tr>
+      <tr><td>50.0%</td><td>Not a Fibonacci ratio, but widely watched. The midpoint of any move. Psychologically significant.</td></tr>
+      <tr><td>61.8% ★</td><td>The Golden Ratio retracement. Most significant level. Typical Wave 2 target. Strong potential reversal zone.</td></tr>
+      <tr><td>78.6%</td><td>Square root of 61.8%. Deep retracement. A move to this level questions trend continuation but is not yet a reversal.</td></tr>
+    </table>
+    <div class="formula">Retracement Level = High − (High − Low) × Fibonacci Ratio</div>
+    <div class="formula">Extension Level = Low + (High − Low) × Fibonacci Extension Ratio
+Common extensions: 127.2%, 161.8%, 261.8%</div>
+  </div>
+
+  <div class="section-divider"><span>Breakouts & Retracements</span></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Valid Breakout Criteria</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Price close</strong> — closing beyond S/R is more significant than an intraday pierce (which can be a trap).</p>
+        <p><strong style="color:var(--text);font-weight:500">Volume confirmation</strong> — a breakout should occur on above-average volume. Volume on the breakout should exceed the average of the consolidation volume.</p>
+        <p><strong style="color:var(--text);font-weight:500">Follow-through</strong> — a second day of continuation beyond the breakout level reduces false breakout risk.</p>
+        <p><strong style="color:var(--text);font-weight:500">Pullback to S/R</strong> — a retest of the broken level that holds (role reversal) provides a high-probability secondary entry.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Stops & Risk</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Structural stops</strong> — placed just beyond the key S/R or swing point that invalidates the trade setup.</p>
+        <p><strong style="color:var(--text);font-weight:500">ATR-based stops</strong> — N × ATR below entry (long) or above (short). Adjusts for current volatility regime.</p>
+        <p><strong style="color:var(--text);font-weight:500">Time stops</strong> — exit if price doesn't move in the expected direction within a defined timeframe. Useful for consolidation breakout trades.</p>
+        <p><strong style="color:var(--text);font-weight:500">Trailing stops</strong> — moves with price to lock in profits. Can use swing lows, moving averages, or ATR multiples.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MOVING AVERAGES ─── -->
+<section id="page-movingavg" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Moving Averages</div>
+    <div class="page-subtitle">Moving averages smooth price data to identify trend direction, dynamic support/resistance, and generate entry/exit signals via crossovers.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Types of Moving Averages</div>
+    <table class="def-table">
+      <tr><td>Simple (SMA)</td><td>Arithmetic mean of closing prices over N periods. Equal weight to all data points. Slower and smoother. Better for identifying key S/R levels.</td></tr>
+      <tr><td>Exponential (EMA)</td><td>Applies exponentially greater weight to recent prices. More responsive to recent price action. Preferred for dynamic S/R and crossover signals.</td></tr>
+      <tr><td>Weighted (WMA)</td><td>Linear weighting — most recent period gets the highest weight. Less common but useful for short-term responsiveness.</td></tr>
+      <tr><td>Hull (HMA)</td><td>Uses weighted MAs and a square root period to minimise lag almost entirely. Reactive but can generate more false signals.</td></tr>
+    </table>
+    <div class="formula">EMA = Price × k + EMA(prev) × (1 − k)   where k = 2 / (N + 1)
+
+SMA = Sum(Close, N) / N</div>
+  </div>
+
+  <div class="control-panel">
+    <div class="cp-header">
+      <div class="cp-title">Moving Average Interactive Demo</div>
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="setMA('SMA',this)">SMA</button>
+        <button class="tab-btn" onclick="setMA('EMA',this)">EMA</button>
+        <button class="tab-btn" onclick="setMA('Both',this)">Both</button>
+      </div>
+    </div>
+    <div class="cp-body">
+      <div class="slider-row">
+        <span class="slider-label">Fast period</span>
+        <input type="range" id="ma-fast" min="3" max="25" value="9" oninput="updateMA()">
+        <span class="slider-val" id="ma-fast-val">9</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">Slow period</span>
+        <input type="range" id="ma-slow" min="10" max="50" value="21" oninput="updateMA()">
+        <span class="slider-val" id="ma-slow-val">21</span>
+      </div>
+      <div class="chart-wrap" style="height:200px"><canvas id="ma-chart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Key Crossover Signals</div>
+      <table class="def-table">
+        <tr><td>Golden Cross</td><td>50 SMA crosses above 200 SMA. Long-term bullish signal widely watched by institutions.</td></tr>
+        <tr><td>Death Cross</td><td>50 SMA crosses below 200 SMA. Long-term bearish signal.</td></tr>
+        <tr><td>8/21 EMA</td><td>Intermediate-term signal. Popular among CMT practitioners for trend identification.</td></tr>
+        <tr><td>20 EMA retest</td><td>Common intraday technique — pullback to 20 EMA on 5-min chart for continuation entry.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Bollinger Bands</div>
+      <div class="card-body">
+        <p>Developed by John Bollinger. A moving average envelope using standard deviation to dynamically adjust band width to volatility.</p>
+      </div>
+      <div class="formula">Upper = MA(20) + 2σ
+Lower = MA(20) − 2σ
+Width = Upper − Lower  (Bandwidth)</div>
+      <div class="card-body" style="margin-top:10px">
+        <p><strong style="color:var(--text);font-weight:500">Squeeze</strong> — bands narrow to historically tight levels. Signals low volatility preceding a breakout move.</p>
+        <p><strong style="color:var(--text);font-weight:500">Walking the band</strong> — price consistently touches the upper or lower band in a strong trend.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BAR CHART PATTERNS ─── -->
+<section id="page-barcharts" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Bar Chart Patterns</div>
+    <div class="page-subtitle">Chart patterns represent recurring formations that reflect the psychology of market participants. Each pattern has a measured move target derived from its structure.</div>
+  </div>
+
+  <div class="section-divider"><span>Reversal Patterns</span></div>
+  <div class="pattern-grid" id="reversal-patterns">
+    <div class="pattern-card" onclick="showPat('hns')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-hns"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Head & Shoulders</div><div class="pattern-tag bearish-tag">Bearish Reversal</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('ihns')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-ihns"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Inv. Head & Shoulders</div><div class="pattern-tag bullish-tag">Bullish Reversal</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('dbtop')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-dbtop"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Double Top</div><div class="pattern-tag bearish-tag">Bearish Reversal</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('dbbot')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-dbbot"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Double Bottom</div><div class="pattern-tag bullish-tag">Bullish Reversal</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('tptop')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-tptop"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Triple Top</div><div class="pattern-tag bearish-tag">Bearish Reversal</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('rounding')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-rounding"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Rounding Bottom</div><div class="pattern-tag bullish-tag">Bullish Reversal</div></div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Continuation Patterns</span></div>
+  <div class="pattern-grid">
+    <div class="pattern-card" onclick="showPat('flag')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-flag"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Bull Flag</div><div class="pattern-tag bullish-tag">Bullish Continuation</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('pennant')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-pennant"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Pennant</div><div class="pattern-tag neutral-tag">Continuation</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('symtri')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-symtri"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Symmetrical Triangle</div><div class="pattern-tag neutral-tag">Continuation</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('asctri')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-asctri"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Ascending Triangle</div><div class="pattern-tag bullish-tag">Bullish Continuation</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('wedge')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-wedge"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Rising Wedge</div><div class="pattern-tag bearish-tag">Bearish Continuation</div></div>
+    </div>
+    <div class="pattern-card" onclick="showPat('cup')">
+      <div class="pattern-canvas-wrap"><canvas id="pc-cup"></canvas></div>
+      <div class="pattern-info"><div class="pattern-name">Cup & Handle</div><div class="pattern-tag bullish-tag">Bullish Continuation</div></div>
+    </div>
+  </div>
+
+  <div id="pat-detail" class="card card-accent-blue" style="display:none">
+    <div class="card-title" id="pd-name"></div>
+    <div class="grid-2" style="margin-bottom:0">
+      <div>
+        <div class="card-body" id="pd-desc"></div>
+        <div class="formula" id="pd-target"></div>
+      </div>
+      <div>
+        <div class="card-body" id="pd-notes"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SHORT TERM PATTERNS ─── -->
+<section id="page-shortterm" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Short-Term Patterns & Gaps</div>
+    <div class="page-subtitle">Short-term price patterns and gap analysis reveal near-term supply/demand imbalances. Most reliable when aligned with the prevailing trend direction.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Gap Types</div>
+    <table class="def-table">
+      <tr><td>Common Gap</td><td>Occurs in low-volume areas or trading ranges. Quickly filled. Little analytical significance. Also called area gap.</td></tr>
+      <tr><td>Breakaway Gap</td><td>Occurs on high volume as price breaks out of a consolidation pattern. Signals strong momentum. Often not filled for a long time.</td></tr>
+      <tr><td>Runaway Gap (Measuring Gap)</td><td>Occurs midway through a trend move on increased volume. Signals trend continuation. Can be used to project the end of the move.</td></tr>
+      <tr><td>Exhaustion Gap</td><td>Occurs near the end of a trend on high volume. Soon followed by a reversal. Price quickly fills the gap. Often identified in hindsight.</td></tr>
+      <tr><td>Island Reversal</td><td>Exhaustion gap + reversal day + breakaway gap in the opposite direction. Strong reversal signal. Isolated price "island" on the chart.</td></tr>
+    </table>
+    <div class="formula">Measuring Gap Target = Low of gap + (Low of gap − Start of move)</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Key Short-Term Patterns</div>
+      <table class="def-table">
+        <tr><td>One-Day Reversal</td><td>New extreme (high/low) followed by a close in the opposite direction on high volume. Exhaustion signal.</td></tr>
+        <tr><td>Key Reversal Day</td><td>Bar makes new high (low) then closes below (above) prior close. More significant than a one-day reversal.</td></tr>
+        <tr><td>Inside Day</td><td>High and low entirely within prior bar's range. Consolidation/indecision. Breakout from inside day can be significant.</td></tr>
+        <tr><td>Outside Day</td><td>High and low both exceed prior bar's range. Volatility expansion. Direction determined by close.</td></tr>
+        <tr><td>Pipe Top/Bottom</td><td>Two adjacent bars with nearly identical highs (tops) or lows (bottoms) and long wicks. Reversal pattern.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Price Targets & Measuring Rules</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Head & Shoulders target:</strong> Neckline − (Head − Neckline)</p>
+        <p><strong style="color:var(--text);font-weight:500">Triangle target:</strong> Breakout ± base width of triangle at widest point</p>
+        <p><strong style="color:var(--text);font-weight:500">Flag/Pennant target:</strong> Breakout + length of the pole preceding pattern</p>
+        <p><strong style="color:var(--text);font-weight:500">Rectangle target:</strong> Breakout ± height of rectangle</p>
+        <p><strong style="color:var(--text);font-weight:500">Cup & Handle target:</strong> Breakout + depth of cup</p>
+        <p style="margin-top:10px">These are minimum targets. In strong trends, price often significantly exceeds the measured move.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VOLUME ─── -->
+<section id="page-volume" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Volume Analysis</div>
+    <div class="page-subtitle">Volume is the fuel behind price moves. It validates price action and often leads price at key turning points. A move without volume is suspect.</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Core Principles</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Volume confirms trend:</strong> In an uptrend, volume should be heaviest on up days and lightest on down days. Divergence warns of weakening trend.</p>
+        <p><strong style="color:var(--text);font-weight:500">Breakout volume:</strong> A valid breakout from a pattern or S/R should occur on volume above the N-day average.</p>
+        <p><strong style="color:var(--text);font-weight:500">Climax volume:</strong> Extremely high volume (blowoff top or selling climax) often marks exhaustion and imminent reversal.</p>
+        <p><strong style="color:var(--text);font-weight:500">Volume precedes price:</strong> Changes in volume often anticipate price direction changes.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Volume Indicators</div>
+      <table class="def-table">
+        <tr><td>OBV</td><td>On Balance Volume. Cumulative volume — add on up days, subtract on down days. Trend should confirm price.</td></tr>
+        <tr><td>CMF</td><td>Chaikin Money Flow. Measures buying/selling pressure over a period using the close's location within the bar's range.</td></tr>
+        <tr><td>Volume Rate of Change</td><td>Measures the rate at which volume is changing. Spikes identify high-activity events.</td></tr>
+        <tr><td>Volume-Weighted MA</td><td>Moving average giving more weight to prices traded at higher volume. More "true" than a simple MA.</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Volume Profile Concepts</div>
+    <table class="def-table">
+      <tr><td>Point of Control (POC)</td><td>The price level with the highest volume traded over a period. Strong magnet for price; key S/R reference.</td></tr>
+      <tr><td>Value Area (VA)</td><td>The range of prices where approximately 70% of volume was traded. Breakouts from the value area often see rapid acceleration.</td></tr>
+      <tr><td>High Volume Node (HVN)</td><td>Price area with heavy historical volume. Price tends to consolidate and slow at these zones.</td></tr>
+      <tr><td>Low Volume Node (LVN)</td><td>Price area with minimal historical volume. Price tends to pass quickly through LVNs — targets the next HVN.</td></tr>
+      <tr><td>VWAP</td><td>Volume-Weighted Average Price. Intraday benchmark. Institutional traders use it as a reference for execution quality. Acts as dynamic S/R.</td></tr>
+    </table>
+    <div class="formula">OBV = OBV(prev) + Volume  (if Close > Close(prev))
+OBV = OBV(prev) − Volume  (if Close < Close(prev))
+
+CMF = Sum(Money Flow Volume, N) / Sum(Volume, N)
+Money Flow Multiplier = [(Close − Low) − (High − Close)] / (High − Low)</div>
+  </div>
+</section>
+
+<!-- ─── CANDLESTICKS ─── -->
+<section id="page-candlesticks" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Candlestick Charting</div>
+    <div class="page-subtitle">Developed in Japan by Munehisa Homma in the 18th century for rice trading. Introduced to the West by Steve Nison. Candlesticks reveal market sentiment within each period.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Anatomy of a Candlestick</div>
+    <div class="chart-wrap" style="height:130px"><canvas id="candle-anatomy"></canvas></div>
+  </div>
+  <div class="section-divider"><span>Single Candle Patterns</span></div>
+  <div class="card">
+    <table class="def-table">
+      <tr><td>Marubozu</td><td>No wicks. Full session dominance by bulls (bullish) or bears (bearish). Strong continuation signal.</td></tr>
+      <tr><td>Doji</td><td>Open ≈ Close. Indecision. Significance depends on context and prior trend. More meaningful after extended moves.</td></tr>
+      <tr><td>Dragonfly Doji</td><td>Open = High = Close; long lower shadow. Bullish — sellers drove price down but buyers recovered all losses.</td></tr>
+      <tr><td>Gravestone Doji</td><td>Open = Low = Close; long upper shadow. Bearish — buyers drove price up but sellers pushed it all the way back.</td></tr>
+      <tr><td>Hammer</td><td>Small body, long lower shadow (≥2× body), little/no upper shadow. Bullish after downtrend. Hanging Man is the same shape in an uptrend (bearish).</td></tr>
+      <tr><td>Shooting Star</td><td>Small body, long upper shadow (≥2× body), little/no lower shadow. Bearish after uptrend. Inverted Hammer is the same shape in a downtrend (bullish potential).</td></tr>
+      <tr><td>Spinning Top</td><td>Small body, upper and lower shadows. More balanced than a doji but still signals indecision.</td></tr>
+    </table>
+  </div>
+  <div class="section-divider"><span>Multi-Candle Patterns</span></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Bullish Patterns</div>
+      <table class="def-table">
+        <tr><td>Bullish Engulfing</td><td>Large bullish candle completely engulfs prior bearish candle's body. Strong reversal signal after downtrend.</td></tr>
+        <tr><td>Piercing Pattern</td><td>Bearish candle followed by bullish candle that opens below prior low and closes above midpoint. Bullish reversal.</td></tr>
+        <tr><td>Morning Star</td><td>3-candle: large bearish → small body (gap) → large bullish. Classic bottom reversal pattern.</td></tr>
+        <tr><td>Three White Soldiers</td><td>Three consecutive large bullish candles with each opening within prior body and closing at highs. Strong bullish continuation.</td></tr>
+        <tr><td>Bullish Harami</td><td>Large bearish candle followed by small bullish candle contained within the first. Weaker reversal signal — requires confirmation.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Bearish Patterns</div>
+      <table class="def-table">
+        <tr><td>Bearish Engulfing</td><td>Large bearish candle completely engulfs prior bullish candle's body. Strong reversal after uptrend.</td></tr>
+        <tr><td>Dark Cloud Cover</td><td>Bullish candle followed by bearish candle that opens above prior high and closes below midpoint. Bearish reversal.</td></tr>
+        <tr><td>Evening Star</td><td>3-candle: large bullish → small body (gap) → large bearish. Classic top reversal pattern.</td></tr>
+        <tr><td>Three Black Crows</td><td>Three consecutive large bearish candles with each opening within prior body and closing at lows. Strong bearish signal.</td></tr>
+        <tr><td>Bearish Harami</td><td>Large bullish candle followed by small bearish candle contained within the first. Requires confirmation.</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="callout callout-blue">
+    <div class="callout-title">CMT Exam Focus</div>
+    <div class="callout-body">Context is critical — a hammer at a support level or after a Fibonacci retracement is far more significant than one appearing in the middle of a range. Confirmed patterns (next candle validates) carry more weight than unconfirmed. Abandoned baby (gap + doji + gap) is a particularly strong reversal signal tested on Level II.</div>
+  </div>
+</section>
+
+<!-- ─── POINT & FIGURE ─── -->
+<section id="page-pnf" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Point & Figure Charting</div>
+    <div class="page-subtitle">A time-independent method that filters noise and focuses purely on significant price movements. Developed in the late 19th century by Charles Dow and refined by Thomas Dorsey.</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Construction Rules</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Box size:</strong> The minimum price increment required to add a new X or O. Commonly set as ATR or a fixed value. Determines sensitivity.</p>
+        <p><strong style="color:var(--text);font-weight:500">Reversal amount:</strong> The number of boxes in the opposite direction required to reverse from X column to O column (or vice versa). Typically 3 boxes.</p>
+        <p><strong style="color:var(--text);font-weight:500">X columns</strong> represent rising prices (demand). <strong style="color:var(--text);font-weight:500">O columns</strong> represent falling prices (supply).</p>
+        <p>Time is not shown. Only price movement matters — a chart could represent one day or one year.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">P&F Patterns & Signals</div>
+      <table class="def-table">
+        <tr><td>Double Top Buy</td><td>X column exceeds prior X column high. Basic buy signal.</td></tr>
+        <tr><td>Double Bottom Sell</td><td>O column falls below prior O column low. Basic sell signal.</td></tr>
+        <tr><td>Triple Top Buy</td><td>X column breaks above two prior X column highs. Stronger buy signal.</td></tr>
+        <tr><td>Bullish Catapult</td><td>Triple top buy followed by pullback and renewed breakout. Very strong buy signal.</td></tr>
+        <tr><td>45° Trendline</td><td>Upward (bullish support) or downward (bearish resistance) lines drawn at 45° on the P&F grid.</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Count Methods for Targets</div>
+    <table class="def-table">
+      <tr><td>Vertical Count (Bullish)</td><td>Count the number of Xs in the first X column of the breakout × box size × reversal amount. Add to the low of the base.</td></tr>
+      <tr><td>Horizontal Count (Bullish)</td><td>Count the number of columns in the base formation × box size × reversal amount. Add to the base.</td></tr>
+    </table>
+    <div class="formula">Bullish Vertical Target = Low + (# of Xs in column × Box Size × Reversal Amount)
+Bearish Vertical Target = High − (# of Os in column × Box Size × Reversal Amount)</div>
+  </div>
+</section>
+
+<!-- ─── CONFIRMATION ─── -->
+<section id="page-confirmation" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Confirmation</div>
+    <div class="page-subtitle">No single indicator or signal should be acted on in isolation. Confirmation from multiple independent sources significantly improves signal reliability and reduces false signals.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Types of Confirmation</div>
+    <table class="def-table">
+      <tr><td>Price confirmation</td><td>A second bar confirming the direction of the signal bar. Reduces false positives at the cost of some entry slippage.</td></tr>
+      <tr><td>Volume confirmation</td><td>Volume expanding in the direction of the signal. The single most important confirming indicator for chart patterns and breakouts.</td></tr>
+      <tr><td>Multiple indicator confirmation</td><td>Two or more independent indicators (trend + momentum + breadth) all pointing in the same direction.</td></tr>
+      <tr><td>Multiple timeframe confirmation</td><td>Signal on the primary timeframe confirmed by the higher timeframe trend and the lower timeframe momentum.</td></tr>
+      <tr><td>Intermarket confirmation</td><td>Related markets confirming the directional signal (e.g., sector ETF confirming individual stock breakout).</td></tr>
+    </table>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Divergence (Negative Confirmation)</div>
+      <div class="card-body">
+        <p>Divergence occurs when price and an indicator disagree. This is often a more powerful signal than confirmation.</p>
+        <p><strong style="color:var(--text);font-weight:500">Bearish divergence:</strong> Price makes a new high but indicator (RSI, MACD) fails to. Signals weakening momentum even as price rises.</p>
+        <p><strong style="color:var(--text);font-weight:500">Bullish divergence:</strong> Price makes a new low but indicator makes a higher low. Signals strengthening buying pressure beneath the surface.</p>
+        <p>Hidden divergence: indicator makes new extreme but price does not. Can confirm trend continuation.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Common Pitfalls</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Over-confirmation:</strong> Waiting for too many confirmations results in late entries and reduced reward:risk.</p>
+        <p><strong style="color:var(--text);font-weight:500">Correlated indicators:</strong> Using two momentum oscillators (RSI + Stochastics) is not confirmation — they are derived from the same source data. True confirmation requires independent data sources.</p>
+        <p><strong style="color:var(--text);font-weight:500">Indicator selection:</strong> Mix trend-following (MA, MACD) with oscillators (RSI, Stochastics) for genuine independent confirmation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CYCLES ─── -->
+<section id="page-cycles" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Cycle Analysis</div>
+    <div class="page-subtitle">Markets move in recurring patterns driven by human behaviour and economic fundamentals. Cycle analysis identifies the dominant periodic patterns to project future turning points.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Economic Cycles</div>
+    <table class="def-table">
+      <tr><td>Kitchin Cycle</td><td>~3–4 years. Business inventory cycle. Short-term fluctuations in inventory buildup and depletion.</td></tr>
+      <tr><td>Juglar Cycle</td><td>~7–11 years. Business investment cycle. Capital expenditure and fixed investment fluctuations.</td></tr>
+      <tr><td>Kuznets Cycle</td><td>~15–25 years. Infrastructure and construction cycle. Driven by demographics and real estate.</td></tr>
+      <tr><td>Kondratieff Wave</td><td>~45–60 years. Long wave economic cycle identified by Nikolai Kondratieff. Driven by major technological innovations and debt supercycles.</td></tr>
+    </table>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Cycle Principles</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Summation principle:</strong> All price activity is the result of the sum of all active cycles. The dominant cycle exerts the most influence.</p>
+        <p><strong style="color:var(--text);font-weight:500">Commonality:</strong> Similar cycles appear across different markets and time periods.</p>
+        <p><strong style="color:var(--text);font-weight:500">Variation:</strong> Cycles do not repeat with perfect periodicity — allow ±10–15% timing variance.</p>
+        <p><strong style="color:var(--text);font-weight:500">Nominality:</strong> Cycles tend to be longer during uptrends (right translation) and shorter during downtrends (left translation).</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Seasonal Patterns</div>
+      <table class="def-table">
+        <tr><td>Presidential Cycle</td><td>4-year US election cycle. Year 3 and pre-election year 4 tend to be strongest for equities historically.</td></tr>
+        <tr><td>"Sell in May"</td><td>Historical weakness May–October vs. strength November–April. Not universally reliable but widely cited.</td></tr>
+        <tr><td>January Effect</td><td>Small-cap stocks historically outperform in January following tax-loss selling in December.</td></tr>
+        <tr><td>Monthly seasonality</td><td>Options expiration effects, window dressing, and quarterly rebalancing create recurring intramonth patterns.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MARKET STRENGTH ─── -->
+<section id="page-marketstrength" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Market Strength & Breadth</div>
+    <div class="page-subtitle">Breadth indicators measure the internal health of a market move by analysing the participation of individual components, not just the index level.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Key Breadth Indicators</div>
+    <table class="def-table">
+      <tr><td>Advance-Decline Line</td><td>Running total of (advancing issues − declining issues) each day. Should trend in same direction as price index. Divergence = warning.</td></tr>
+      <tr><td>Advance-Decline Ratio</td><td>Advances / Declines. Oscillator version of A-D data. Used with smoothing to identify extremes.</td></tr>
+      <tr><td>McClellan Oscillator</td><td>Difference between 19-day and 39-day EMAs of net advances. Short-term overbought/oversold breadth indicator.</td></tr>
+      <tr><td>McClellan Summation Index</td><td>Cumulative version of McClellan Oscillator. Longer-term breadth trend indicator.</td></tr>
+      <tr><td>High-Low Index</td><td>52-week new highs vs. new lows. Above 50 = more new highs (bullish). Below 50 = more new lows (bearish).</td></tr>
+      <tr><td>% Above Moving Average</td><td>Percentage of index components trading above their 50 or 200 SMA. Above 80% = overbought. Below 20% = oversold.</td></tr>
+      <tr><td>Arms Index (TRIN)</td><td>Trading Index = (Advances/Declines) / (Advancing Volume/Declining Volume). Above 1 = bearish bias; Below 1 = bullish bias. Contrarian at extremes.</td></tr>
+    </table>
+  </div>
+  <div class="callout callout-amber">
+    <div class="callout-title">Key CMT Concept: Breadth Divergence</div>
+    <div class="callout-body">When an index makes a new high but the A-D line fails to confirm, it signals that fewer and fewer stocks are driving the rally. This internal deterioration often precedes a significant correction by weeks or months. The 1999–2000 market top was preceded by significant breadth divergence.</div>
+  </div>
+</section>
+
+<!-- ─── SENTIMENT ─── -->
+<section id="page-sentiment" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Sentiment Analysis</div>
+    <div class="page-subtitle">Sentiment indicators measure the psychological state of market participants. At extremes, they function as contrarian signals — the crowd is most bullish at tops and most bearish at bottoms.</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Survey-Based Sentiment</div>
+      <table class="def-table">
+        <tr><td>AAII Survey</td><td>Weekly survey of retail investors. Extreme bullishness (&gt;55%) = contrarian bearish signal. Used as a contrary indicator.</td></tr>
+        <tr><td>Investors Intelligence</td><td>Surveys investment newsletter writers. Bull ratio vs. bear ratio. Extreme bullish consensus historically precedes corrections.</td></tr>
+        <tr><td>NAAIM Exposure Index</td><td>Active money manager equity exposure. Extreme high = caution; extreme low = opportunity.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Market-Based Sentiment</div>
+      <table class="def-table">
+        <tr><td>Put/Call Ratio</td><td>Total put volume / call volume. High ratio = excessive fear (contrarian bullish). Low ratio = complacency (contrarian bearish).</td></tr>
+        <tr><td>VIX (Fear Index)</td><td>Implied volatility of SPX options. Above 30 = fear; below 15 = complacency. Spikes near market lows, troughs near tops.</td></tr>
+        <tr><td>Short Interest Ratio</td><td>Total short interest / average daily volume. High short interest = significant short squeeze potential if price rallies.</td></tr>
+        <tr><td>COT Report</td><td>Commitments of Traders. Commercial hedgers ("smart money") vs. large speculators. Extremes in commercial net position are contrarian signals.</td></tr>
+        <tr><td>Margin Debt</td><td>High NYSE margin debt historically peaks near market tops as investor leverage reaches maximum. Decline from peak is concerning.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EMH ─── -->
+<section id="page-emh" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">EMH, Random Walk & Behavioural Finance (L1)</div>
+    <div class="page-subtitle">Understanding the academic critique of technical analysis and the behavioural finance arguments that support it.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Efficient Market Hypothesis (EMH)</div>
+    <table class="def-table">
+      <tr><td>Weak Form</td><td>All past prices and volume are already reflected in current prices. Technical analysis cannot consistently generate alpha. Historical data has no predictive power.</td></tr>
+      <tr><td>Semi-Strong Form</td><td>All publicly available information is immediately reflected in prices. Neither technical nor fundamental analysis can consistently beat the market.</td></tr>
+      <tr><td>Strong Form</td><td>All information, including insider information, is reflected in prices. No one can consistently beat the market. Generally rejected empirically.</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">Behavioural Finance Arguments for TA</div>
+    <table class="def-table">
+      <tr><td>Anchoring</td><td>Investors anchor to prior prices (e.g., purchase price), creating predictable zones of decision-making — the basis for S/R levels.</td></tr>
+      <tr><td>Loss Aversion</td><td>Losses feel ~2× more painful than equivalent gains feel good (Kahneman-Tversky). Creates reluctance to sell losers, supporting downtrend continuation.</td></tr>
+      <tr><td>Herd Behaviour</td><td>Following the crowd creates momentum. Trends persist because participants copy each other. Technical trend-following exploits this.</td></tr>
+      <tr><td>Overconfidence</td><td>Traders overestimate their skill and the precision of signals. Creates excessive trading and contributes to momentum.</td></tr>
+      <tr><td>Recency Bias</td><td>Over-weighting recent events. Drives trend continuation — recent winners are expected to keep winning.</td></tr>
+      <tr><td>Disposition Effect</td><td>Tendency to sell winners too early and hold losers too long. Creates predictable supply at prior highs (resistance).</td></tr>
+      <tr><td>Noise Trader Risk</td><td>Noise traders (uninformed) can move prices persistently away from fundamental value. Technical analysts can identify and follow these moves.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ─── STATISTICS ─── -->
+<section id="page-statistics" class="page">
+  <div class="page-header">
+    <div class="badge badge-l1">Level I</div>
+    <div class="page-title">Basic Statistics for Technical Analysts</div>
+    <div class="page-subtitle">Statistical concepts underpin objective evaluation of TA systems. Without statistics, backtesting results are meaningless.</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Descriptive Statistics</div>
+      <div class="formula">Mean (μ) = ΣX / N
+Variance (σ²) = Σ(X − μ)² / N
+Std Dev (σ) = √Variance
+Skewness = E[(X−μ)³] / σ³
+Kurtosis = E[(X−μ)⁴] / σ⁴ − 3</div>
+      <div class="card-body" style="margin-top:10px">
+        <p>In returns distributions: positive skew = more small losses with occasional large gains. Negative skew (fat left tail) = more common small gains but catastrophic losses. Leptokurtosis (fat tails) is common in financial returns — normal distribution assumptions underestimate tail risk.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Probability Concepts</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Expected Value:</strong> The probability-weighted average outcome.</p>
+        <div class="formula">E = (Win% × Avg Win) − (Loss% × Avg Loss)</div>
+        <p>A positive expectancy system is the goal of all system design.</p>
+        <p><strong style="color:var(--text);font-weight:500">Bayes' Theorem</strong> — updating probabilities with new evidence. Relevant when combining multiple TA signals.</p>
+        <p><strong style="color:var(--text);font-weight:500">Standard Error</strong> — the standard deviation of the sampling distribution. Important for assessing backtesting result reliability.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Hypothesis Testing for Trading Systems</div>
+    <table class="def-table">
+      <tr><td>Null Hypothesis (H₀)</td><td>The system has no edge — any positive results are due to randomness/data mining.</td></tr>
+      <tr><td>Significance Level (α)</td><td>Threshold for rejecting H₀. Commonly 5% (p &lt; 0.05) or 1% (p &lt; 0.01). Lower α = more stringent test.</td></tr>
+      <tr><td>Type I Error</td><td>False positive — rejecting H₀ when it is true. Concluding a system has edge when it doesn't. Dangerous in trading.</td></tr>
+      <tr><td>Type II Error</td><td>False negative — failing to reject H₀ when it is false. Missing a real edge.</td></tr>
+      <tr><td>Multiple Testing Problem</td><td>Testing many parameters/rules increases the chance of finding spurious patterns that don't hold out-of-sample.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ─── ELLIOTT WAVE ─── -->
+<section id="page-elliott" class="page">
+  <div class="page-header">
+    <div class="badge badge-l2">Level II</div>
+    <div class="page-title">Elliott Wave Theory</div>
+    <div class="page-subtitle">Developed by Ralph Nelson Elliott in the 1930s. Markets move in fractal wave patterns driven by collective crowd psychology. Fibonacci ratios connect the waves.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">The 5-3 Wave Structure</div>
+    <div class="chart-wrap" style="height:260px"><canvas id="elliott-chart"></canvas></div>
+    <div class="card-body" style="margin-top:12px">Markets move in an impulse of 5 waves in the direction of the larger trend (waves 1, 2, 3, 4, 5) followed by a corrective 3-wave structure in the opposite direction (waves A, B, C). This pattern repeats at every degree of trend — the fractal principle.</div>
+  </div>
+
+  <div class="section-divider"><span>Wave Rules (Inviolable)</span></div>
+  <div class="grid-3">
+    <div class="callout callout-red">
+      <div class="callout-title">Rule 1</div>
+      <div class="callout-body">Wave 2 CANNOT retrace more than 100% of Wave 1. If it does, the wave count is invalid.</div>
+    </div>
+    <div class="callout callout-red">
+      <div class="callout-title">Rule 2</div>
+      <div class="callout-body">Wave 3 can NEVER be the shortest of Waves 1, 3, and 5. It is typically the longest.</div>
+    </div>
+    <div class="callout callout-red">
+      <div class="callout-title">Rule 3</div>
+      <div class="callout-body">Wave 4 CANNOT overlap the price territory of Wave 1 (except in diagonals and leveraged instruments).</div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Wave Guidelines (Common but Not Inviolable)</span></div>
+  <div class="card">
+    <table class="def-table">
+      <tr><td>Wave 2 retracement</td><td>Often 61.8% of Wave 1 (Golden Ratio). Sharp, counter-intuitive correction. Often confuses participants.</td></tr>
+      <tr><td>Wave 3 extension</td><td>Typically 1.618× Wave 1. The strongest wave — best trend-following entry, highest volume, broadest participation.</td></tr>
+      <tr><td>Wave 4 retracement</td><td>Often 38.2% of Wave 3. Sideways, complex correction. Alternation principle: if Wave 2 is sharp, Wave 4 is flat (and vice versa).</td></tr>
+      <tr><td>Wave 5 extension</td><td>Often equals Wave 1 in length. Can extend to 1.618× Wave 1 if Wave 3 was extended.</td></tr>
+      <tr><td>Alternation principle</td><td>If Wave 2 is simple (zigzag), Wave 4 tends to be complex (flat or triangle), and vice versa.</td></tr>
+    </table>
+  </div>
+
+  <div class="section-divider"><span>Corrective Wave Patterns</span></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Simple Corrections</div>
+      <table class="def-table">
+        <tr><td>Zigzag (5-3-5)</td><td>Sharp correction. Wave A has 5 sub-waves, B has 3, C has 5. B retraces no more than 61.8% of A.</td></tr>
+        <tr><td>Flat (3-3-5)</td><td>Sideways correction. Often follows a strong trend. Wave B retraces near 100% of A.</td></tr>
+        <tr><td>Triangle (3-3-3-3-3)</td><td>Five sub-waves (A-B-C-D-E), each with 3 sub-waves. Typically forms in Wave 4 or Wave B. Precedes final thrust.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Wave Degrees</div>
+      <table class="def-table">
+        <tr><td>Grand Supercycle</td><td>Centuries in duration</td></tr>
+        <tr><td>Supercycle</td><td>Decades</td></tr>
+        <tr><td>Cycle</td><td>1–10 years</td></tr>
+        <tr><td>Primary</td><td>Months to years</td></tr>
+        <tr><td>Intermediate</td><td>Weeks to months</td></tr>
+        <tr><td>Minor / Minute / Minuette</td><td>Days to weeks</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ─── OSCILLATORS ─── -->
+<section id="page-oscillators" class="page">
+  <div class="page-header">
+    <div class="badge badge-l2">Level II</div>
+    <div class="page-title">Oscillators & Momentum Indicators</div>
+    <div class="page-subtitle">Bounded indicators measuring momentum and rate of change. Most effective in ranging markets but also useful for divergence signals in trending markets.</div>
+  </div>
+
+  <div class="control-panel">
+    <div class="cp-header">
+      <div class="cp-title">RSI Interactive Demo</div>
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="setRSI('std',this)">Standard</button>
+        <button class="tab-btn" onclick="setRSI('bull_div',this)">Bull Divergence</button>
+        <button class="tab-btn" onclick="setRSI('bear_div',this)">Bear Divergence</button>
+      </div>
+    </div>
+    <div class="cp-body">
+      <div class="slider-row">
+        <span class="slider-label">RSI Period</span>
+        <input type="range" id="rsi-period" min="7" max="21" value="14" oninput="updateRSI()">
+        <span class="slider-val" id="rsi-period-val">14</span>
+      </div>
+      <div class="chart-wrap" style="height:130px"><canvas id="rsi-price-chart"></canvas></div>
+      <div class="chart-wrap" style="height:90px"><canvas id="rsi-panel-chart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="formula">RSI = 100 − [100 / (1 + RS)]
+RS = Average Gain (N periods) / Average Loss (N periods)
+Standard period = 14. Overbought > 70, Oversold < 30.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">MACD</div>
+      <div class="card-body">Moving Average Convergence Divergence. Gerald Appel's trend-following momentum indicator.</div>
+      <div class="formula">MACD Line = EMA(12) − EMA(26)
+Signal Line = EMA(9) of MACD Line
+Histogram = MACD Line − Signal Line</div>
+      <div class="card-body" style="margin-top:10px">
+        <p><strong style="color:var(--text);font-weight:500">Signal line crossover:</strong> MACD crosses above signal = bullish. Below = bearish.</p>
+        <p><strong style="color:var(--text);font-weight:500">Zero line crossover:</strong> MACD crosses above/below zero. Confirms trend change.</p>
+        <p><strong style="color:var(--text);font-weight:500">Histogram divergence:</strong> Histogram shrinking before a signal line crossover — early warning.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Stochastics</div>
+      <div class="card-body">Developed by George Lane. Measures where the close is relative to the high-low range over N periods.</div>
+      <div class="formula">%K = (Close − Lowest Low(N)) / (Highest High(N) − Lowest Low(N)) × 100
+%D = 3-period SMA of %K (signal line)</div>
+      <div class="card-body" style="margin-top:10px">
+        <p>Overbought > 80, Oversold < 20. Crossover of %K above %D in oversold zone = buy signal. Divergence from price is the strongest signal.</p>
+        <p><strong style="color:var(--text);font-weight:500">Slow stochastic:</strong> %D becomes the new %K; smoothed further. Reduces false signals.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Other Key Oscillators</div>
+      <table class="def-table">
+        <tr><td>Williams %R</td><td>Inverted stochastic. Range -100 to 0. Below -80 = oversold; above -20 = overbought.</td></tr>
+        <tr><td>Rate of Change (ROC)</td><td>(Close − Close(N)) / Close(N) × 100. Measures percentage change over N periods. Unbounded momentum oscillator.</td></tr>
+        <tr><td>CCI (Commodity Channel)</td><td>Measures deviation from average price. Above +100 = overbought; below -100 = oversold. Also used as trend indicator above/below zero.</td></tr>
+        <tr><td>ATR</td><td>Average True Range. Not an oscillator but a volatility measure. True Range = Max(H-L, |H-PC|, |L-PC|). Used for stops and position sizing.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Oscillator Divergence Types</div>
+      <table class="def-table">
+        <tr><td>Regular Bearish</td><td>Price: higher high. Indicator: lower high. Trend weakening. Most common reversal warning.</td></tr>
+        <tr><td>Regular Bullish</td><td>Price: lower low. Indicator: higher low. Selling pressure diminishing. Potential reversal.</td></tr>
+        <tr><td>Hidden Bearish</td><td>Price: lower high. Indicator: higher high. Trend continuation downward.</td></tr>
+        <tr><td>Hidden Bullish</td><td>Price: higher low. Indicator: lower low. Trend continuation upward. Pullback entry signal.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ADVANCED INDICATORS ─── -->
+<section id="page-indicators2" class="page">
+  <div class="page-header">
+    <div class="badge badge-l2">Level II</div>
+    <div class="page-title">Advanced Indicators</div>
+    <div class="page-subtitle">More sophisticated tools that combine multiple data sources or measure specific market characteristics such as trend strength, money flow, and market structure.</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">ADX — Average Directional Index</div>
+      <div class="card-body">Developed by J. Welles Wilder. Measures the strength of a trend, not its direction. Used with +DI and -DI for directional bias.</div>
+      <div class="formula">TR = Max(H-L, |H-PC|, |L-PC|)
++DM = H − PH (if positive, else 0)
+-DM = PL − L (if positive, else 0)
++DI = 100 × EMA(+DM) / ATR
+-DI = 100 × EMA(-DM) / ATR
+ADX = 100 × EMA(|+DI − -DI| / (+DI + -DI))</div>
+      <div class="card-body" style="margin-top:10px">
+        <p>ADX > 25 = trending market. ADX < 20 = ranging market. ADX rising = trend strengthening. ADX falling = trend weakening regardless of price direction.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ichimoku Cloud</div>
+      <div class="card-body">Developed by Goichi Hosoda. An all-in-one indicator providing support/resistance, trend direction, and momentum.</div>
+      <div class="formula">Tenkan-sen = (9H + 9L) / 2  (Conversion line)
+Kijun-sen = (26H + 26L) / 2  (Base line)
+Senkou Span A = (Tenkan + Kijun) / 2  (leading, 26 fwd)
+Senkou Span B = (52H + 52L) / 2  (leading, 26 fwd)
+Chikou Span = Close plotted 26 periods back</div>
+      <div class="card-body" style="margin-top:10px">
+        <p>Price above cloud = bullish. Price below cloud = bearish. A thick green cloud = strong support. Thin cloud = weak support.</p>
+      </div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Parabolic SAR</div>
+      <div class="card-body">Wilder's Parabolic Stop and Reverse. Provides trailing stops that accelerate as a trend develops.</div>
+      <div class="formula">SAR(t) = SAR(t-1) + α × (EP − SAR(t-1))
+α (acceleration factor) = 0.02 start, max 0.20
+EP = Extreme Point (highest high or lowest low)</div>
+      <div class="card-body" style="margin-top:10px">Price above SAR = long. Price crosses below SAR = reverse to short. Best used in trending markets; generates excessive signals in ranging conditions.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Keltner Channels</div>
+      <div class="card-body">
+        <p>Similar to Bollinger Bands but uses ATR instead of standard deviation for band width. Less sensitive to single large moves.</p>
+        <div class="formula">Middle = EMA(20)
+Upper = EMA(20) + 2 × ATR(10)
+Lower = EMA(20) − 2 × ATR(10)</div>
+        <p style="margin-top:8px">When Bollinger Bands are inside Keltner Channels = squeeze signal. Breakout of both channels = very strong move.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INTERMARKET ─── -->
+<section id="page-intermarket" class="page">
+  <div class="page-header">
+    <div class="badge badge-l2">Level II</div>
+    <div class="page-title">Intermarket Analysis</div>
+    <div class="page-subtitle">John Murphy's framework for understanding the relationships between bonds, stocks, commodities, and currencies. These relationships provide leading signals and context for TA.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Core Intermarket Relationships</div>
+    <table class="def-table">
+      <tr><td>Bonds ↔ Stocks</td><td>Typically inversely related. Rising yields (falling bond prices) increase the discount rate and compress equity valuations. Relationship can break down in deflationary crises (both fall).</td></tr>
+      <tr><td>Bonds ↔ Commodities</td><td>Inverse. Rising commodity prices signal inflation, pushing bond yields higher (prices lower). Commodity prices lead the inflation cycle.</td></tr>
+      <tr><td>USD ↔ Commodities</td><td>Inverse. Dollar-denominated commodities become more expensive globally when USD strengthens, reducing demand and prices.</td></tr>
+      <tr><td>USD ↔ Gold</td><td>Strongly inverse. Gold is priced in dollars and is an inflation/uncertainty hedge. Dollar weakness = gold strength.</td></tr>
+      <tr><td>USD ↔ Equities</td><td>Mixed. A strong dollar can pressure multinational earnings (negative for large-caps). A strong dollar also attracts capital inflows to US equities.</td></tr>
+      <tr><td>Oil ↔ Energy Sector</td><td>Strong positive correlation. Oil prices lead energy sector stocks and have secondary effects on the broader market through inflation.</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">Business Cycle Sector Rotation (Stovall / Merrill Lynch)</div>
+    <table class="def-table">
+      <tr><td>Early Expansion</td><td>Financials, Consumer Discretionary, Technology. Credit expanding; consumers spending; growth expectations rising.</td></tr>
+      <tr><td>Mid Expansion</td><td>Industrials, Materials, Technology. Capital expenditure cycle accelerates; infrastructure investment.</td></tr>
+      <tr><td>Late Expansion</td><td>Energy, Materials, Real Estate, Staples. Inflation rising; commodity prices peak; yield curve flattening.</td></tr>
+      <tr><td>Contraction / Recession</td><td>Healthcare, Utilities, Consumer Staples. Defensive sectors. Earnings resilience in downturn; dividend yield attractive vs. falling rates.</td></tr>
+      <tr><td>Early Recovery</td><td>Financials (again), Consumer Discretionary. Rate cuts begin; credit conditions ease.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ─── VOLATILITY ─── -->
+<section id="page-volatility" class="page">
+  <div class="page-header">
+    <div class="badge badge-l2">Level II</div>
+    <div class="page-title">Volatility Analysis & Options (VIX)</div>
+    <div class="page-subtitle">Volatility is a critical dimension of market analysis. It is mean-reverting, cyclical, and provides insight into market fear and complacency. Essential for options-aware technical analysts.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">VIX — CBOE Volatility Index</div>
+    <div class="card-body" style="margin-bottom:12px">The VIX measures the 30-day implied volatility of SPX options. It represents the market's expectation of future realised volatility, expressed as an annualised percentage.</div>
+    <table class="def-table">
+      <tr><td>VIX &lt; 15</td><td>Low volatility / complacency. Markets calm. Often near market peaks when used as a contrarian indicator.</td></tr>
+      <tr><td>VIX 15–25</td><td>Normal/moderate volatility range. No strong contrarian signal.</td></tr>
+      <tr><td>VIX &gt; 30</td><td>Elevated fear. Often near market lows. Spikes above 40 historically signal capitulation and near-term reversal opportunity.</td></tr>
+      <tr><td>VIX Term Structure</td><td>Contango (VIX spot &lt; VIX futures) = normal. Backwardation (spot &gt; futures) = acute fear. Shift from contango to backwardation is an early warning for long SPX positions.</td></tr>
+      <tr><td>VIX/VXV Ratio</td><td>Short-term vs. 3-month implied volatility. Ratio &gt; 1 = near-term fear spike; below 1 = normal. Mean-reverts quickly.</td></tr>
+    </table>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Historical vs. Implied Volatility</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Historical Volatility (HV):</strong> Realised volatility calculated from actual price changes over a lookback period. Backward-looking.</p>
+        <div class="formula">HV = StdDev(Daily Returns, N) × √252</div>
+        <p><strong style="color:var(--text);font-weight:500">Implied Volatility (IV):</strong> The volatility embedded in option prices. Forward-looking. Reflects the market's consensus expectation.</p>
+        <p>IV &gt; HV = options are expensive. IV &lt; HV = options are cheap. Premium sellers prefer high IV; premium buyers prefer low IV.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Volatility for TA Practitioners</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">ATR position sizing:</strong> Risk = N × ATR. Ensures consistent dollar risk across instruments and market regimes.</p>
+        <p><strong style="color:var(--text);font-weight:500">Bollinger Band squeeze:</strong> Narrowing bands signal historically low volatility — a volatility expansion breakout is imminent.</p>
+        <p><strong style="color:var(--text);font-weight:500">Low VIX + extreme breadth:</strong> Combination of complacency and overextended breadth is a high-confidence warning for medium-term correction risk.</p>
+        <p><strong style="color:var(--text);font-weight:500">0DTE/weekly options:</strong> High gamma exposure creates amplified price moves at key S/R levels as dealers hedge — creates self-fulfilling technical reactions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SYSTEM DESIGN ─── -->
+<section id="page-systemdesign" class="page">
+  <div class="page-header">
+    <div class="badge badge-l2">Level II</div>
+    <div class="page-title">System Design & Testing</div>
+    <div class="page-subtitle">Objective, rule-based trading systems remove emotional bias and allow rigorous performance evaluation. Evidence-based TA requires statistical validation of signals and strategies.</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">System Components</div>
+      <table class="def-table">
+        <tr><td>Entry rules</td><td>Objective conditions that trigger a position. Must be unambiguous and testable historically.</td></tr>
+        <tr><td>Exit rules</td><td>Stop loss (risk management) + profit target or trailing stop (trend following). Equal importance to entry.</td></tr>
+        <tr><td>Position sizing</td><td>How much capital to risk per trade. The most important driver of long-term performance outcomes.</td></tr>
+        <tr><td>Universe filter</td><td>Which instruments to trade and when. Can dramatically affect results.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Backtesting Pitfalls</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Data mining bias:</strong> Testing many rules on the same data will find patterns that don't hold out-of-sample.</p>
+        <p><strong style="color:var(--text);font-weight:500">Overfitting:</strong> Too many parameters curve-fit to historical noise. Use minimum parameters.</p>
+        <p><strong style="color:var(--text);font-weight:500">Survivorship bias:</strong> Testing only on currently listed stocks ignores companies that went bankrupt.</p>
+        <p><strong style="color:var(--text);font-weight:500">Look-ahead bias:</strong> Using data that wasn't available at the time of the signal.</p>
+        <p><strong style="color:var(--text);font-weight:500">Transaction costs:</strong> Slippage, spreads, and commissions must be realistically modelled.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Key Performance Metrics</div>
+    <div class="formula">Profit Factor = Gross Profit / Gross Loss  (want > 1.5)
+Expected Value = (Win% × Avg Win) − (Loss% × Avg Loss)
+Sharpe Ratio = (Return − Risk-free Rate) / StdDev(Returns)
+Sortino Ratio = (Return − Risk-free Rate) / Downside Deviation
+Calmar Ratio = CAGR / Maximum Drawdown
+Max Drawdown = (Peak − Trough) / Peak × 100</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Robustness Testing</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Walk-forward analysis:</strong> Optimise on in-sample period, test on subsequent out-of-sample period. Repeat rolling forward.</p>
+        <p><strong style="color:var(--text);font-weight:500">Monte Carlo simulation:</strong> Randomise trade order to assess the range of possible equity curves. Identifies worst-case drawdown scenarios.</p>
+        <p><strong style="color:var(--text);font-weight:500">Parameter sensitivity:</strong> Test a range of parameter values. Robust systems perform well across a range, not just at one optimised value.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ned Davis: Being Right vs. Making Money</div>
+      <div class="card-body">
+        <p>A system with 40% win rate can be highly profitable if average winners are significantly larger than average losers. Win rate alone is meaningless without considering the payoff ratio.</p>
+        <div class="formula">Minimum Win Rate = 1 / (1 + Avg Win / Avg Loss)
+Example: 2:1 R:R → needs only 33.3% win rate to break even</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CRYPTO ─── -->
+<section id="page-crypto" class="page">
+  <div class="page-header">
+    <div class="badge badge-l2">Level II</div>
+    <div class="page-title">Crypto & Digital Assets</div>
+    <div class="page-subtitle">Technical analysis is particularly well-suited to crypto markets — they are sentiment-driven, trade 24/7, and lack fundamental anchors that would override technical signals.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Why TA Applies to Crypto</div>
+    <div class="card-body">
+      <p>Crypto markets exhibit all the conditions that make TA effective: trending behaviour, recognisable chart patterns, volume-confirming moves, Fibonacci retracements, and strong sentiment-driven cycles. The absence of fundamental earnings anchors means price is driven almost entirely by supply/demand dynamics and sentiment.</p>
+      <p>The 24/7 trading cycle means daily candlesticks represent a complete session but without the opening gap dynamics of equity markets.</p>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Crypto-Specific Indicators</div>
+      <table class="def-table">
+        <tr><td>Stock-to-Flow (S2F)</td><td>Ratio of existing supply to new annual production. Bitcoin's halving cycle creates predictable supply shocks modelled by S2F.</td></tr>
+        <tr><td>MVRV Ratio</td><td>Market Value / Realised Value. Compares current market cap to the average cost basis of all coins. High MVRV = historically overbought.</td></tr>
+        <tr><td>NVT Ratio</td><td>Network Value / Transaction Volume. Crypto's equivalent of P/E. High NVT = overvalued vs. utility.</td></tr>
+        <tr><td>Hash Rate</td><td>Mining difficulty. Rising hash rate = network security increasing = bullish long-term signal for Bitcoin.</td></tr>
+        <tr><td>Funding Rate</td><td>Perpetual futures funding. Positive = longs paying shorts (bullish crowding). Extreme positive = contrarian bearish.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Halving Cycle Framework</div>
+      <div class="card-body">
+        <p>Bitcoin's block reward halves approximately every 4 years (every ~210,000 blocks). This supply shock has historically been followed by a bull cycle of 12–18 months.</p>
+        <p>The four-year halving cycle maps onto a rough pattern: accumulation pre-halving → bull market → euphoria top → bear market → next halving.</p>
+        <p>Technical analysts apply standard charting tools — trend lines, Fibonacci extensions, volume profile — to identify entry and exit points within this cycle framework.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RISK MANAGEMENT ─── -->
+<section id="page-riskmanagement" class="page">
+  <div class="page-header">
+    <div class="badge badge-l3">Level III</div>
+    <div class="page-title">Risk Management</div>
+    <div class="page-subtitle">Capital preservation is the primary objective. The mathematics of drawdown show that losing 50% requires a 100% gain to recover. Systematic risk management is non-negotiable.</div>
+  </div>
+
+  <div class="control-panel">
+    <div class="cp-header"><div class="cp-title">Position Sizing Calculator</div></div>
+    <div class="cp-body">
+      <div class="slider-row">
+        <span class="slider-label">Account Size ($)</span>
+        <input type="range" id="acct" min="10000" max="1000000" step="10000" value="100000" oninput="updateRisk()">
+        <span class="slider-val" id="acct-val">$100,000</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">Risk per trade (%)</span>
+        <input type="range" id="risk-pct" min="0.25" max="5" step="0.25" value="1" oninput="updateRisk()">
+        <span class="slider-val" id="risk-pct-val">1.00%</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">Stop distance (%)</span>
+        <input type="range" id="stop-pct" min="0.25" max="10" step="0.25" value="2" oninput="updateRisk()">
+        <span class="slider-val" id="stop-pct-val">2.00%</span>
+      </div>
+      <div class="metric-grid">
+        <div class="metric"><div class="metric-label">$ at Risk</div><div class="metric-val blue" id="risk-dollar">$1,000</div></div>
+        <div class="metric"><div class="metric-label">Position Size</div><div class="metric-val green" id="pos-size">50.0%</div></div>
+        <div class="metric"><div class="metric-label">Max Positions (1%)</div><div class="metric-val amber" id="max-pos">100</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Drawdown Mathematics</div>
+    <div class="chart-wrap" style="height:200px"><canvas id="drawdown-chart"></canvas></div>
+    <div class="callout callout-red" style="margin-top:12px">
+      <div class="callout-title">The Asymmetry of Losses</div>
+      <div class="callout-body">A 10% loss requires an 11.1% gain to recover. A 25% loss requires a 33.3% gain. A 50% loss requires a 100% gain. A 75% loss requires a 300% gain. This asymmetry is why risk management is the primary concern at Level III.</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Stop Placement Methods</div>
+      <table class="def-table">
+        <tr><td>Structural</td><td>Below key swing low (long) or above swing high (short). Most logical invalidation point for the trade thesis.</td></tr>
+        <tr><td>ATR-based</td><td>Entry ± N × ATR. Adapts to current volatility regime. Typically 1.5–2.5× ATR for swing trades.</td></tr>
+        <tr><td>Trendline</td><td>Below the trendline that justified the entry. Violated trendline = trade thesis invalidated.</td></tr>
+        <tr><td>Fixed % (fallback only)</td><td>Simple but ignores market structure. Use only as a maximum loss limit, not as primary stop.</td></tr>
+        <tr><td>Chandelier Exit</td><td>Trailing stop = Highest High (N) − N × ATR. Allows trend trades to breathe while protecting gains.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Kelly Criterion & Position Sizing</div>
+      <div class="formula">Kelly % = W − [(1−W) / R]
+W = Win rate
+R = Average Win / Average Loss (reward ratio)
+
+Example: 50% win rate, 2:1 R:R
+Kelly = 0.5 − (0.5/2) = 25%
+Recommended: Use Half-Kelly (12.5%) for safety</div>
+      <div class="card-body" style="margin-top:10px">
+        <p>Full Kelly maximises long-run growth but results in extreme drawdowns. Half-Kelly (or fractional Kelly) balances growth with survivability. Most professional traders risk 0.5–2% per trade regardless of Kelly calculation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PORTFOLIO ─── -->
+<section id="page-portfolio" class="page">
+  <div class="page-header">
+    <div class="badge badge-l3">Level III</div>
+    <div class="page-title">Portfolio Management with TA</div>
+    <div class="page-subtitle">Integrating technical analysis into portfolio construction, position management, and client communication for professional asset management contexts.</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">TA in Portfolio Context</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Asset allocation:</strong> Intermarket analysis and trend signals determine tactical over/underweight across asset classes relative to a strategic benchmark.</p>
+        <p><strong style="color:var(--text);font-weight:500">Security selection:</strong> Relative strength analysis identifies the strongest securities within a sector or universe for overweight positions.</p>
+        <p><strong style="color:var(--text);font-weight:500">Timing:</strong> TA provides entry and exit signals for building or reducing positions. Scaling in/out at technical levels improves average execution price.</p>
+        <p><strong style="color:var(--text);font-weight:500">Risk monitoring:</strong> Ongoing technical monitoring of positions allows early exit before stops are hit in deteriorating markets.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Portfolio-Level Risk</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Correlation risk:</strong> Positions that appear diversified by sector may have high price correlation during stress events. Monitor correlation matrices.</p>
+        <p><strong style="color:var(--text);font-weight:500">Beta management:</strong> Portfolio beta can be managed using index derivatives when individual position liquidation is impractical.</p>
+        <p><strong style="color:var(--text);font-weight:500">Drawdown limits:</strong> Define maximum portfolio drawdown levels that trigger defensive action (reduce risk, hedge, or liquidate).</p>
+        <p><strong style="color:var(--text);font-weight:500">Sector concentration:</strong> Breadth of trend across sectors — if only one or two sectors are driving portfolio performance, risk is concentrated.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Investment Policy Statement (IPS) Considerations</div>
+    <table class="def-table">
+      <tr><td>Return objective</td><td>Define absolute or relative return targets. TA-based systems should have a clearly defined expected return based on backtesting and forward validation.</td></tr>
+      <tr><td>Risk tolerance</td><td>Maximum drawdown, maximum position size, stop-loss protocols. These must be documented and adhered to.</td></tr>
+      <tr><td>Liquidity needs</td><td>Affects position sizing and instrument selection. Illiquid positions require wider stops and smaller sizes.</td></tr>
+      <tr><td>Time horizon</td><td>Determines which timeframe of TA is appropriate — scalping strategies are inappropriate for a pension fund.</td></tr>
+      <tr><td>Regulatory constraints</td><td>Some clients have restrictions on derivatives, leverage, short positions, or specific asset classes.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ─── RELATIVE STRENGTH ─── -->
+<section id="page-relativestrength" class="page">
+  <div class="page-header">
+    <div class="badge badge-l3">Level III</div>
+    <div class="page-title">Relative Strength Analysis</div>
+    <div class="page-subtitle">Robert Levy's research showed that stocks with the strongest 26-week relative performance tend to continue outperforming. Relative strength is a core tool for security selection and sector rotation.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Types of Relative Strength</div>
+    <table class="def-table">
+      <tr><td>Price ratio (RS Ratio)</td><td>Security price / Benchmark price. Rising ratio = outperformance. Chart the ratio and apply standard TA to it.</td></tr>
+      <tr><td>Levy RS Rank</td><td>Rank securities by (current price / 26-week average price). Top quartile = buy candidates; bottom quartile = sell.</td></tr>
+      <tr><td>Sector RS</td><td>Sector ETF / Index ratio identifies leadership and rotation. Use RS analysis to position in leading sectors.</td></tr>
+    </table>
+    <div class="formula">RS Ratio = Asset Price / Benchmark Price
+Normalised RS = (RS / RS Moving Average − 1) × 100</div>
+  </div>
+  <div class="card">
+    <div class="card-title">RRG — Relative Rotation Graphs</div>
+    <div class="card-body">
+      <p>Developed by Julius de Kempenaer. Plots JdK RS-Ratio (x-axis) vs. JdK RS-Momentum (y-axis) for multiple securities simultaneously. Each security traces a path through four quadrants as its relative strength evolves.</p>
+    </div>
+    <table class="def-table">
+      <tr><td>Leading (top right)</td><td>Strong RS and improving momentum. Current outperformers. Overweight.</td></tr>
+      <tr><td>Weakening (bottom right)</td><td>Strong RS but fading momentum. Prior leaders rotating out. Begin reducing.</td></tr>
+      <tr><td>Lagging (bottom left)</td><td>Weak RS and declining momentum. Current underperformers. Underweight.</td></tr>
+      <tr><td>Improving (top left)</td><td>Weak RS but strengthening momentum. Future leaders emerging. Begin accumulating.</td></tr>
+    </table>
+    <div class="callout callout-blue" style="margin-top:12px">
+      <div class="callout-title">Trading Rule</div>
+      <div class="callout-body">Sectors rotate clockwise through the four RRG quadrants. Entering positions in the "Improving" quadrant before the move to "Leading" provides the best risk/reward entry points in sector rotation trades.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ASSET RELATIONSHIPS ─── -->
+<section id="page-assetrelationships" class="page">
+  <div class="page-header">
+    <div class="badge badge-l3">Level III</div>
+    <div class="page-title">Asset Relationships</div>
+    <div class="page-subtitle">Understanding how different asset classes interact in different market regimes is essential for portfolio-level technical analysis and risk management.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Correlation Analysis</div>
+    <div class="card-body" style="margin-bottom:12px">Correlation is not static. Relationships that hold in normal markets can break down or reverse during stress periods. The analyst must monitor rolling correlations.</div>
+    <table class="def-table">
+      <tr><td>Stable positive (0.7–1.0)</td><td>Assets move together reliably. Diversification benefit is limited. Risk is concentrated.</td></tr>
+      <tr><td>Unstable / regime-dependent</td><td>Stocks/bonds positive in deflationary crises (both fall); negative in inflationary cycles. Requires regime-aware analysis.</td></tr>
+      <tr><td>Crisis correlation</td><td>In liquidity crises, correlations spike toward +1 as investors sell everything to raise cash. Diversification fails at the worst time.</td></tr>
+    </table>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Yield Curve & Equities</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Steep curve:</strong> Long rates well above short rates. Banks profit from carry; credit expands; bullish for growth assets.</p>
+        <p><strong style="color:var(--text);font-weight:500">Flat curve:</strong> Convergence signals slowing growth expectations. Neutral for equities.</p>
+        <p><strong style="color:var(--text);font-weight:500">Inverted curve:</strong> Short rates above long rates. Historically precedes recession by 6–18 months. Bearish for cyclical equities; bullish for defensive sectors.</p>
+        <p>Technical analysts chart the 2s10s spread (10-year minus 2-year Treasury yield) as a key intermarket indicator.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Gold as a Signal Asset</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Gold/Silver ratio:</strong> Rising ratio = risk aversion (gold outperforms silver). Falling ratio = risk appetite. A classic risk-on/risk-off indicator.</p>
+        <p><strong style="color:var(--text);font-weight:500">Gold/SPX ratio:</strong> Rising = gold outperforming; defensive environment. Falling = equities outperforming; risk-on.</p>
+        <p><strong style="color:var(--text);font-weight:500">Real yields:</strong> Gold is most sensitive to real (inflation-adjusted) yields. Falling real yields = bullish for gold regardless of nominal rate direction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BEHAVIOURAL ─── -->
+<section id="page-behavioural" class="page">
+  <div class="page-header">
+    <div class="badge badge-l3">Level III</div>
+    <div class="page-title">Behavioural Finance (Level III)</div>
+    <div class="page-subtitle">At Level III, behavioural finance is applied to explain market anomalies, justify TA, and inform client communication. Understanding why patterns exist makes them more credible and persistent.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Prospect Theory (Kahneman & Tversky)</div>
+    <div class="card-body" style="margin-bottom:12px">People evaluate outcomes relative to a reference point (usually purchase price), not in absolute terms. Losses feel approximately twice as painful as equivalent gains feel good.</div>
+    <div class="chart-wrap" style="height:200px"><canvas id="prospect-chart"></canvas></div>
+    <div class="card-body" style="margin-top:12px">This asymmetry explains resistance levels at prior highs (holders who bought at the top are eager to break even and sell) and support at prior lows (buyers who sold with losses re-enter when price returns).</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Market Anomalies & TA</div>
+      <table class="def-table">
+        <tr><td>Momentum Effect</td><td>Stocks that performed well in the past 3–12 months tend to continue outperforming. The foundation of trend-following. Jegadeesh & Titman, 1993.</td></tr>
+        <tr><td>Mean Reversion</td><td>Extreme performers tend to revert toward the mean over longer horizons (3–5 years). Supports oscillator-based contrarian signals.</td></tr>
+        <tr><td>January Effect</td><td>Small-caps outperform in January following year-end tax-loss selling. Predictable seasonal anomaly.</td></tr>
+        <tr><td>Post-Earnings Drift</td><td>Stocks drift in the direction of earnings surprises for weeks after announcement. Technical trend-followers can capture this.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Applying Behavioural Finance to Clients</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Setting loss limits in advance:</strong> Use TA stop levels to pre-commit to exit rules before emotions become involved in the decision.</p>
+        <p><strong style="color:var(--text);font-weight:500">Systematic rebalancing:</strong> Forces selling of recent winners and buying of recent laggards — countering recency bias.</p>
+        <p><strong style="color:var(--text);font-weight:500">Communicating risk:</strong> Showing clients a historical drawdown chart of the strategy manages expectations and reduces panic-driven redemptions.</p>
+        <p><strong style="color:var(--text);font-weight:500">Rules-based process:</strong> A documented, objective trading system removes the analyst's discretionary decisions from the equation — important for fiduciary credibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CLASSICAL METHODS ─── -->
+<section id="page-classical" class="page">
+  <div class="page-header">
+    <div class="badge badge-l3">Level III</div>
+    <div class="page-title">Classical Methods Integration Review</div>
+    <div class="page-subtitle">Level III requires integration of classical TA tools — applying them together in a coherent analytical framework rather than in isolation.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">The Technical Analysis Process</div>
+    <table class="def-table">
+      <tr><td>Step 1: Macro / Intermarket</td><td>Identify the macroeconomic regime. What is the trend in USD, bonds, commodities? What business cycle phase are we in?</td></tr>
+      <tr><td>Step 2: Index / Market Analysis</td><td>What is the primary trend of the major indices? Is breadth confirming? What does volume tell us about trend health?</td></tr>
+      <tr><td>Step 3: Sector Analysis</td><td>Which sectors are showing relative strength? Use RRG or RS ratios to identify leaders and laggards.</td></tr>
+      <tr><td>Step 4: Individual Security</td><td>Within the leading sectors, identify securities at technical entry points (breakouts, pullbacks to MA, pattern completions).</td></tr>
+      <tr><td>Step 5: Entry Timing</td><td>Use shorter-term charts to time the entry. Confirm with volume and oscillator signals.</td></tr>
+      <tr><td>Step 6: Position Management</td><td>Place stop based on structure. Define profit target using measured move. Monitor ongoing trend health.</td></tr>
+    </table>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Multiple Timeframe Framework</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Higher timeframe (Monthly/Weekly):</strong> Identifies primary trend direction. Trade only in this direction unless specific reversal criteria are met.</p>
+        <p><strong style="color:var(--text);font-weight:500">Middle timeframe (Daily):</strong> Identifies the intermediate swing and potential entry pattern (breakout, pullback, pattern completion).</p>
+        <p><strong style="color:var(--text);font-weight:500">Lower timeframe (4h/1h/5min):</strong> Times the entry precisely. Momentum oscillators and volume confirm the micro-level entry signal.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Conflicting Signals</div>
+      <div class="card-body">
+        <p>When different indicators or timeframes conflict, the analyst should:</p>
+        <p>1. Default to the higher timeframe trend. Lower timeframe signals against the primary trend have lower probability.</p>
+        <p>2. Require additional confirmation before acting against the trend.</p>
+        <p>3. Reduce position size when conviction is lower due to conflicting signals.</p>
+        <p>4. Use the conflict itself as information — a market that can't make new highs despite bullish indicators is signalling distribution.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PERFORMANCE ─── -->
+<section id="page-performance" class="page">
+  <div class="page-header">
+    <div class="badge badge-l3">Level III</div>
+    <div class="page-title">Performance Measurement</div>
+    <div class="page-subtitle">Objective performance measurement allows systematic evaluation of strategy effectiveness and comparison across different approaches and risk levels.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Performance Metrics Reference</div>
+    <div class="formula">Annualised Return (CAGR) = (End Value / Start Value)^(1/Years) − 1
+Annualised Volatility = StdDev(Daily Returns) × √252
+Sharpe Ratio = (CAGR − Risk-free Rate) / Annualised Volatility
+Sortino Ratio = (CAGR − Risk-free Rate) / Downside Deviation
+Calmar Ratio = CAGR / |Maximum Drawdown|
+Information Ratio = Active Return / Tracking Error
+Max Drawdown = (Peak Equity − Trough Equity) / Peak Equity × 100
+Profit Factor = Total Gross Profits / Total Gross Losses
+Expectancy = (Win% × Avg Win) − (Loss% × Avg Loss)
+Recovery Factor = Net Profit / Maximum Drawdown</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Risk-Adjusted Return Comparison</div>
+      <div class="card-body">
+        <p><strong style="color:var(--text);font-weight:500">Sharpe Ratio</strong> penalises all volatility equally (both upside and downside). A Sharpe above 1.0 is considered good; above 2.0 is exceptional.</p>
+        <p><strong style="color:var(--text);font-weight:500">Sortino Ratio</strong> only penalises downside volatility. Better measure for trend-following systems that have asymmetric returns.</p>
+        <p><strong style="color:var(--text);font-weight:500">Calmar Ratio</strong> focuses on the worst-case drawdown scenario. Preferred by traders who experience large drawdowns.</p>
+        <p><strong style="color:var(--text);font-weight:500">Information Ratio</strong> measures active return per unit of tracking error. Relevant when benchmarked against an index.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Trade-Level Metrics</div>
+      <table class="def-table">
+        <tr><td>Win Rate</td><td>% of trades that are profitable. Meaningless in isolation — must be paired with payoff ratio.</td></tr>
+        <tr><td>Average R</td><td>Average multiple of initial risk returned per trade. 1.0R = break even; 2.0R = 2× initial risk returned.</td></tr>
+        <tr><td>Largest Losing Trade</td><td>Monitors for catastrophic single-trade losses that indicate stop discipline failure.</td></tr>
+        <tr><td>Consecutive Losses</td><td>The maximum string of losing trades. Determines minimum account size needed to withstand drawdown.</td></tr>
+        <tr><td>Average Hold Time</td><td>Determines the timeframe the system operates in and annualisation assumptions.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+// ─── NAVIGATION ──────────────────────────────────────
+function nav(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  if (btn) btn.classList.add('active');
+  else {
+    document.querySelectorAll('.nav-item').forEach(n => {
+      if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) n.classList.add('active');
+    });
+  }
+  window.scrollTo(0,0);
+  setTimeout(() => initPage(id), 80);
+}
+
+const inited = {};
+function initPage(id) {
+  if (inited[id]) return;
+  inited[id] = true;
+  const fns = {
+    dow: drawDow,
+    movingavg: initMA,
+    barcharts: drawAllPatterns,
+    candlesticks: drawCandleAnatomy,
+    elliott: drawElliott,
+    oscillators: initRSI,
+    riskmanagement: () => { updateRisk(); drawDrawdown(); },
+    behavioural: drawProspect,
+  };
+  if (fns[id]) fns[id]();
+}
+
+// ─── COLOUR HELPERS ───────────────────────────────────
+const C = {
+  accent: '#818cf8', green: '#22c55e', red: '#ef4444',
+  amber: '#f59e0b', teal: '#14b8a6', gray: 'rgba(255,255,255,0.15)',
+  text: '#e8e8f0', text2: '#9898b0', grid: 'rgba(255,255,255,0.06)',
+};
+
+const chartDefaults = {
+  responsive: true, animation: false,
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { display: false },
+    y: { grid: { color: C.grid }, ticks: { color: C.text2, font: { size: 11 } } }
+  }
+};
+
+function genPrice(n, start, vol, drift) {
+  let p = [start];
+  for (let i = 1; i < n; i++) p.push(Math.max(10, p[i-1] * (1 + drift + (Math.random()-0.5)*vol)));
+  return p;
+}
+function sma(data, n) { return data.map((_, i) => i < n-1 ? null : data.slice(i-n+1,i+1).reduce((a,b)=>a+b)/n); }
+function ema(data, n) {
+  const k = 2/(n+1);
+  let e = [data[0]];
+  for (let i=1;i<data.length;i++) e.push(data[i]*k + e[i-1]*(1-k));
+  return e;
+}
+
+// ─── DOW CHART ────────────────────────────────────────
+function drawDow() {
+  const ctx = document.getElementById('dow-chart');
+  if (!ctx) return;
+  let p = [];
+  for (let i=0;i<20;i++) p.push(100 + Math.sin(i*0.5)*3 + (Math.random()-0.5)*4);
+  for (let i=20;i<50;i++) p.push(p[p.length-1] + 2.8 + (Math.random()-0.5)*5);
+  for (let i=50;i<65;i++) p.push(p[p.length-1] + (Math.random()-0.5)*3 - 0.3);
+  new Chart(ctx, {
+    type:'line', data:{labels:p.map((_,i)=>i), datasets:[
+      {data:p, borderColor:C.accent, borderWidth:2, pointRadius:0, tension:0.3, fill:false}
+    ]},
+    options:{...chartDefaults, plugins:{legend:{display:false},
+      annotation:{}
+    }},
+    plugins:[{id:'phases',afterDraw(chart){
+      const c=chart.ctx,a=chart.chartArea,x=chart.scales.x,y=chart.scales.y;
+      [[0,20,'Accumulation','rgba(129,140,248,0.08)'],
+       [20,50,'Public Participation','rgba(34,197,94,0.08)'],
+       [50,65,'Distribution','rgba(239,68,68,0.08)']].forEach(([s,e,lbl,col])=>{
+        const px=x.getPixelForValue(s), pw=x.getPixelForValue(e)-px;
+        c.fillStyle=col; c.fillRect(px,a.top,pw,a.bottom-a.top);
+        c.fillStyle=col.replace('0.08','0.7'); c.font='11px Inter,sans-serif';
+        c.fillText(lbl,px+6,a.top+16);
+      });
+    }}]
+  });
+}
+
+// ─── MA DEMO ─────────────────────────────────────────
+let maChart, maType='Both', maData;
+function initMA() {
+  maData = genPrice(80,100,0.028,0.001);
+  const ctx = document.getElementById('ma-chart');
+  if (!ctx) return;
+  maChart = new Chart(ctx, {type:'line',data:{labels:maData.map((_,i)=>i),datasets:[]},options:chartDefaults});
+  updateMA();
+}
+function setMA(t,btn) {
+  maType=t;
+  document.querySelectorAll('#page-movingavg .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); updateMA();
+}
+function updateMA() {
+  if (!maChart) return;
+  const f=+document.getElementById('ma-fast').value, sl=+document.getElementById('ma-slow').value;
+  document.getElementById('ma-fast-val').textContent=f;
+  document.getElementById('ma-slow-val').textContent=sl;
+  const ds=[{data:maData,borderColor:'rgba(255,255,255,0.2)',borderWidth:1.5,pointRadius:0,tension:0.1,fill:false}];
+  if(maType==='SMA'||maType==='Both') ds.push({data:sma(maData,f),borderColor:C.accent,borderWidth:2,pointRadius:0,tension:0.1,fill:false},{data:sma(maData,sl),borderColor:C.teal,borderWidth:2,pointRadius:0,tension:0.1,fill:false});
+  if(maType==='EMA'||maType==='Both') ds.push({data:ema(maData,f),borderColor:C.green,borderWidth:2,pointRadius:0,tension:0.1,fill:false},{data:ema(maData,sl),borderColor:C.amber,borderWidth:2,pointRadius:0,tension:0.1,fill:false});
+  maChart.data.datasets=ds; maChart.update();
+}
+
+// ─── PATTERNS ─────────────────────────────────────────
+const patData = {
+  hns:{name:'Head & Shoulders',desc:'Three peaks — left shoulder, a higher head, right shoulder at approximately the same height as the left. Neckline connects the troughs. A classic bearish reversal with volume highest on the head.',target:'Target = Neckline − (Head − Neckline)',notes:'Confirmed on a close below the neckline. Right shoulder often forms on lower volume than the head. A retest of the neckline (now resistance) after the breakdown is a high-probability short entry.'},
+  ihns:{name:'Inverse Head & Shoulders',desc:'Mirror of H&S. Three troughs — left shoulder, a lower head, right shoulder. Neckline connects the peaks. Bullish reversal pattern.',target:'Target = Neckline + (Neckline − Head)',notes:'Confirmed on a close above the neckline with expanding volume. The right shoulder often forms on lower volume. One of the most reliable reversal patterns.'},
+  dbtop:{name:'Double Top',desc:'Two consecutive peaks at approximately the same price level separated by a trough. Sellers twice rejected price at the same level.',target:'Target = Neckline − (Top − Neckline)',notes:'Confirmed on a close below the trough (neckline). The two tops do not need to be identical — within 3% is acceptable. Most powerful when the second top forms on declining volume.'},
+  dbbot:{name:'Double Bottom',desc:'Two consecutive troughs at approximately the same price level separated by a peak. Buyers twice defended the same level.',target:'Target = Neckline + (Neckline − Bottom)',notes:'Confirmed on a close above the peak (neckline). Volume should increase on the breakout. The letter W shape is distinctive.'},
+  tptop:{name:'Triple Top',desc:'Three peaks at approximately the same resistance level. Even more significant than a double top as sellers rejected price three times. Continuation of distribution.',target:'Target = Neckline − (Top − Neckline)',notes:'Rare but highly reliable. Volume tends to decline on each successive peak. Confirmed on a close below the neckline.'},
+  rounding:{name:'Rounding Bottom (Saucer)',desc:'A gradual, curved reversal over many weeks or months as sentiment slowly shifts from bearish to bullish. Volume mirrors the U-shape of price.',target:'Target = Breakout + Depth of the Rounding Base',notes:'Associated with very long accumulation periods. The slow, gradual nature makes it highly reliable. The handle (small consolidation at the breakout) is often present.'},
+  flag:{name:'Bull Flag',desc:'A sharp, near-vertical advance (the pole) followed by a mild, parallel downward channel (the flag). Volume contracts during the flag formation.',target:'Target = Breakout Point + Length of Pole',notes:'The flag should retrace no more than 50% of the pole. Volume contraction during the flag and expansion on the breakout are essential confirming factors.'},
+  pennant:{name:'Pennant',desc:'Similar to a flag but with converging trendlines forming a small symmetrical triangle during the consolidation. Also preceded by a sharp pole move.',target:'Target = Breakout + Length of Pole',notes:'Duration is typically 1–3 weeks. A shorter consolidation relative to the pole indicates stronger momentum. Confirming volume pattern is the same as for flags.'},
+  symtri:{name:'Symmetrical Triangle',desc:'Converging trendlines with lower highs and higher lows. A neutral pattern — direction of breakout determines trade bias. Volume contracts through the pattern.',target:'Target = Breakout ± Height of Triangle at Widest Point',notes:'Breakout typically occurs at 2/3 to 3/4 of the way through the triangle. Breakouts on low volume are suspect. Most commonly a continuation pattern.'},
+  asctri:{name:'Ascending Triangle',desc:'Flat upper resistance line with rising lower trendline. Bullish — buyers are becoming increasingly aggressive on dips while sellers hold the same resistance.',target:'Target = Breakout + Height of Triangle',notes:'A bullish pattern regardless of prior trend direction. Volume contracts through formation and should expand significantly on the upside breakout.'},
+  wedge:{name:'Rising Wedge',desc:'Both trendlines rising but converging, with the lower line steeper than the upper. Despite the rising price, this is a bearish pattern as momentum deteriorates.',target:'Target = Breakout − Height of Wedge at Widest Point',notes:'Volume should contract as the pattern develops. Common in corrective B-waves in Elliott Wave. The bearish falling wedge is the mirror image and is bullish.'},
+  cup:{name:'Cup & Handle',desc:'A U-shaped base (cup) followed by a small consolidation (handle) before the breakout. Popularised by William O\'Neil. Typically forms over 3–6 months.',target:'Target = Breakout + Depth of Cup',notes:'The handle should be in the upper third of the cup and should not retrace more than 50% of the cup. Handle duration: 1–4 weeks. Volume dries up in the handle and surges on breakout.'},
+};
+
+function drawPatLine(id, drawFn) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const w=canvas.offsetWidth||200, h=100;
+  canvas.width=w; canvas.height=h;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,w,h);
+  drawFn(ctx, w, h);
+}
+
+function pt(ctx, pts, col, lw) {
+  ctx.strokeStyle=col||C.accent; ctx.lineWidth=lw||2;
+  ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+  pts.slice(1).forEach(p=>ctx.lineTo(p[0],p[1])); ctx.stroke();
+}
+function dash(ctx, pts, col) {
+  ctx.setLineDash([4,3]); pt(ctx, pts, col||C.red, 1.5); ctx.setLineDash([]);
+}
+
+function drawAllPatterns() {
+  setTimeout(()=>{
+    drawPatLine('pc-hns',(c,w,h)=>{
+      pt(c,[[10,75],[25,50],[40,70],[60,20],[80,65],[95,45],[112,75],[w-10,80]]);
+      dash(c,[[25,68],[112,72]]);
+    });
+    drawPatLine('pc-ihns',(c,w,h)=>{
+      pt(c,[[10,25],[25,50],[40,30],[60,80],[80,35],[95,55],[112,25],[w-10,20]]);
+      dash(c,[[25,32],[112,28]],C.green);
+    });
+    drawPatLine('pc-dbtop',(c,w,h)=>{
+      pt(c,[[10,85],[25,30],[50,55],[75,28],[95,60],[w-10,85]]);
+      dash(c,[[10,55],[w-10,55]]);
+    });
+    drawPatLine('pc-dbbot',(c,w,h)=>{
+      pt(c,[[10,15],[25,70],[50,45],[75,72],[95,40],[w-10,15]]);
+      dash(c,[[10,45],[w-10,45]],C.green);
+    });
+    drawPatLine('pc-tptop',(c,w,h)=>{
+      pt(c,[[10,80],[22,30],[38,60],[55,28],[70,58],[85,30],[100,70],[w-10,85]]);
+      dash(c,[[10,60],[w-10,62]]);
+    });
+    drawPatLine('pc-rounding',(c,w,h)=>{
+      const pts=[];
+      for(let i=0;i<=20;i++){const x=10+i*(w-20)/20,y=20+75*Math.sin(i*Math.PI/20);pts.push([x,y]);}
+      pt(c,pts,C.green);
+    });
+    drawPatLine('pc-flag',(c,w,h)=>{
+      pt(c,[[10,85],[35,20]]); // pole
+      pt(c,[[35,20],[55,30],[75,38],[95,28],[w-10,22]],C.accent); // breakout
+      dash(c,[[35,20],[85,35]],C.gray); dash(c,[[35,32],[85,48]],C.gray);
+    });
+    drawPatLine('pc-pennant',(c,w,h)=>{
+      pt(c,[[10,85],[30,20]]); // pole
+      pt(c,[[30,20],[w-10,22]],C.green);
+      dash(c,[[30,20],[70,32]],C.gray); dash(c,[[30,40],[70,32]],C.gray);
+    });
+    drawPatLine('pc-symtri',(c,w,h)=>{
+      pt(c,[[10,20],[30,60],[50,35],[70,55],[90,42],[w-10,42]],C.green);
+      dash(c,[[10,20],[w-10,42]],C.gray); dash(c,[[10,80],[w-10,55]],C.gray);
+    });
+    drawPatLine('pc-asctri',(c,w,h)=>{
+      pt(c,[[10,70],[30,25],[50,55],[70,25],[90,45],[w-10,25]],C.green);
+      dash(c,[[10,25],[w-10,25]],C.gray); dash(c,[[10,70],[90,45]],C.gray);
+    });
+    drawPatLine('pc-wedge',(c,w,h)=>{
+      pt(c,[[10,70],[30,40],[50,60],[70,35],[90,52],[w-10,38]],C.red);
+      dash(c,[[10,70],[w-10,38]],C.gray); dash(c,[[10,50],[w-10,25]],C.gray);
+    });
+    drawPatLine('pc-cup',(c,w,h)=>{
+      const cup=[];
+      for(let i=0;i<=16;i++){const x=10+i*(w-30)/16,y=15+65*Math.sin(i*Math.PI/16);cup.push([x,y]);}
+      pt(c,cup,C.green);
+      pt(c,[[w-20,15],[w-10,22],[w,18],[w+5,15]],C.accent);
+    });
+  },100);
+}
+
+function showPat(id) {
+  const d = patData[id]; if (!d) return;
+  document.getElementById('pd-name').textContent = d.name;
+  document.getElementById('pd-desc').textContent = d.desc;
+  document.getElementById('pd-target').textContent = d.target;
+  document.getElementById('pd-notes').textContent = d.notes;
+  document.getElementById('pat-detail').style.display = 'block';
+  document.querySelectorAll('.pattern-card').forEach(c=>c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+}
+
+// ─── CANDLE ANATOMY ───────────────────────────────────
+function drawCandleAnatomy() {
+  const canvas = document.getElementById('candle-anatomy');
+  if (!canvas) return;
+  canvas.width = canvas.offsetWidth || 700;
+  canvas.height = 130;
+  const ctx = canvas.getContext('2d'), w = canvas.width;
+  ctx.clearRect(0,0,w,130);
+
+  // Bullish candle
+  const bx=w*0.2, by=25, bw=30, bh=65, wick=18;
+  ctx.fillStyle='rgba(34,197,94,0.85)'; ctx.strokeStyle='#22c55e'; ctx.lineWidth=1.5;
+  ctx.fillRect(bx-bw/2,by,bw,bh); ctx.strokeRect(bx-bw/2,by,bw,bh);
+  ctx.beginPath(); ctx.moveTo(bx,by-wick); ctx.lineTo(bx,by); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(bx,by+bh); ctx.lineTo(bx,by+bh+wick); ctx.stroke();
+
+  // Labels
+  ctx.fillStyle=C.text2; ctx.font='12px Inter,sans-serif'; ctx.textAlign='left';
+  const lx=bx+32;
+  [[by-wick,'High'],[by,'Open (bull)'],[by+bh,'Close (bull)'],[by+bh+wick,'Low']].forEach(([y,lbl])=>{
+    ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(bx+2,y); ctx.lineTo(lx-4,y); ctx.stroke();
+    ctx.fillText(lbl,lx,y+4);
+  });
+
+  // Bearish candle
+  const rx=w*0.65, ry=20, rw=30, rh=75, rwick=16;
+  ctx.fillStyle='rgba(239,68,68,0.85)'; ctx.strokeStyle='#ef4444'; ctx.lineWidth=1.5;
+  ctx.fillRect(rx-rw/2,ry,rw,rh); ctx.strokeRect(rx-rw/2,ry,rw,rh);
+  ctx.beginPath(); ctx.moveTo(rx,ry-rwick); ctx.lineTo(rx,ry); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(rx,ry+rh); ctx.lineTo(rx,ry+rh+rwick); ctx.stroke();
+
+  ctx.fillStyle='#22c55e'; ctx.font='12px Inter,sans-serif'; ctx.textAlign='center';
+  ctx.fillText('Bullish Candle',bx,122);
+  ctx.fillStyle='#ef4444';
+  ctx.fillText('Bearish Candle',rx,122);
+}
+
+// ─── ELLIOTT WAVE ─────────────────────────────────────
+function drawElliott() {
+  const canvas = document.getElementById('elliott-chart');
+  if (!canvas) return;
+  canvas.width = canvas.offsetWidth || 700;
+  canvas.height = 260;
+  const ctx = canvas.getContext('2d'), w = canvas.width;
+  ctx.clearRect(0,0,w,260);
+
+  const pts = {
+    0:[30,220],1:[110,90],2:[175,150],3:[280,30],4:[350,120],5:[450,15],
+    A:[510,110],B:[560,65],C:[630,170]
+  };
+
+  // Impulse
+  ctx.strokeStyle=C.accent; ctx.lineWidth=2.5; ctx.beginPath();
+  ctx.moveTo(...pts[0]);
+  [1,2,3,4,5].forEach(n=>ctx.lineTo(...pts[n]));
+  ctx.stroke();
+
+  // Corrective
+  ctx.strokeStyle=C.red; ctx.lineWidth=2; ctx.beginPath();
+  ctx.moveTo(...pts[5]); ['A','B','C'].forEach(k=>ctx.lineTo(...pts[k]));
+  ctx.stroke();
+
+  // Wave labels
+  const drawLabel = (pt, label, isImpulse) => {
+    const [x,y]=pt;
+    ctx.fillStyle = isImpulse ? C.accent : C.red;
+    ctx.beginPath(); ctx.arc(x,y,11,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='bold 11px Inter,sans-serif'; ctx.textAlign='center';
+    ctx.fillText(label,x,y+4);
+  };
+  [1,2,3,4,5].forEach(n=>drawLabel(pts[n],n,true));
+  ['A','B','C'].forEach(k=>drawLabel(pts[k],k,false));
+  ctx.fillStyle=C.text2; ctx.font='12px Inter,sans-serif'; ctx.textAlign='center';
+  ctx.fillText('0',pts[0][0],pts[0][1]+18);
+
+  // Annotations
+  ctx.fillStyle='rgba(129,140,248,0.6)'; ctx.font='11px Inter,sans-serif';
+  ctx.fillText('← 5-wave impulse →',250,250);
+  ctx.fillStyle='rgba(239,68,68,0.6)';
+  ctx.fillText('← ABC correction →',560,200);
+}
+
+// ─── RSI ─────────────────────────────────────────────
+let rsiMode='std', rsiPrice, rsiPanel, rsiPriceData;
+function calcRSI(prices, n) {
+  let g=[],l=[];
+  for(let i=1;i<prices.length;i++){const d=prices[i]-prices[i-1];g.push(d>0?d:0);l.push(d<0?-d:0);}
+  const rsi=[null];
+  for(let i=1;i<prices.length;i++){
+    if(i<n){rsi.push(null);continue;}
+    const ag=g.slice(i-n,i).reduce((a,b)=>a+b)/n, al=l.slice(i-n,i).reduce((a,b)=>a+b)/n;
+    rsi.push(al===0?100:100-100/(1+ag/al));
+  }
+  return rsi;
+}
+
+function initRSI() {
+  if(rsiPrice){rsiPrice.destroy();rsiPanel.destroy();rsiPrice=rsiPanel=null;}
+  let prices;
+  if(rsiMode==='bull_div'){
+    prices=[100,98,95,93,90,92,89,86,84,82,85,83,80,83,82];
+  } else if(rsiMode==='bear_div'){
+    prices=[100,102,105,103,106,104,108,106,110,108,113,111,116];
+  } else {
+    prices=genPrice(40,100,0.025,0.001);
+  }
+  rsiPriceData=prices;
+  const n=+document.getElementById('rsi-period').value;
+  document.getElementById('rsi-period-val').textContent=n;
+  const rsi=calcRSI(prices,n), labels=prices.map((_,i)=>i);
+
+  const ctx1=document.getElementById('rsi-price-chart');
+  rsiPrice=new Chart(ctx1,{type:'line',data:{labels,datasets:[
+    {data:prices,borderColor:C.accent,borderWidth:2,pointRadius:0,tension:0.2,fill:false}
+  ]},options:chartDefaults});
+
+  const ctx2=document.getElementById('rsi-panel-chart');
+  rsiPanel=new Chart(ctx2,{type:'line',data:{labels,datasets:[
+    {data:rsi,borderColor:C.amber,borderWidth:2,pointRadius:0,tension:0.2,fill:false},
+    {data:Array(prices.length).fill(70),borderColor:'rgba(239,68,68,0.4)',borderWidth:1,borderDash:[4,3],pointRadius:0},
+    {data:Array(prices.length).fill(30),borderColor:'rgba(34,197,94,0.4)',borderWidth:1,borderDash:[4,3],pointRadius:0},
+  ]},options:{...chartDefaults,scales:{x:{display:false},y:{min:0,max:100,grid:{color:C.grid},ticks:{color:C.text2,font:{size:11},stepSize:25}}}}});
+}
+
+function setRSI(mode,btn){
+  rsiMode=mode;
+  document.querySelectorAll('#page-oscillators .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  inited['oscillators']=false; initRSI(); inited['oscillators']=true;
+}
+function updateRSI(){inited['oscillators']=false;initRSI();inited['oscillators']=true;}
+
+// ─── RISK CALCULATOR ─────────────────────────────────
+function updateRisk() {
+  const acct=+document.getElementById('acct').value;
+  const rPct=+document.getElementById('risk-pct').value;
+  const sPct=+document.getElementById('stop-pct').value;
+  document.getElementById('acct-val').textContent='$'+acct.toLocaleString();
+  document.getElementById('risk-pct-val').textContent=rPct.toFixed(2)+'%';
+  document.getElementById('stop-pct-val').textContent=sPct.toFixed(2)+'%';
+  const riskDollar=acct*rPct/100;
+  const posSize=(riskDollar/(sPct/100));
+  const posPct=Math.min((posSize/acct*100),100);
+  const maxPos=Math.floor(100/rPct);
+  document.getElementById('risk-dollar').textContent='$'+Math.round(riskDollar).toLocaleString();
+  document.getElementById('pos-size').textContent=posPct.toFixed(1)+'%';
+  document.getElementById('max-pos').textContent=maxPos;
+}
+
+// ─── DRAWDOWN CHART ───────────────────────────────────
+function drawDrawdown() {
+  const ctx=document.getElementById('drawdown-chart');
+  if (!ctx) return;
+  const losses=[5,10,15,20,25,30,40,50,60,70,75];
+  const required=losses.map(l=>((1/(1-l/100))-1)*100);
+  new Chart(ctx,{
+    type:'bar',
+    data:{labels:losses.map(l=>l+'%'),datasets:[
+      {label:'Required Gain to Recover',data:required,
+       backgroundColor:losses.map(l=>l<25?'rgba(34,197,94,0.5)':l<50?'rgba(245,158,11,0.5)':'rgba(239,68,68,0.5)'),
+       borderColor:losses.map(l=>l<25?C.green:l<50?C.amber:C.red),borderWidth:1}
+    ]},
+    options:{responsive:true,animation:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`Required: ${ctx.raw.toFixed(1)}%`}}},
+      scales:{
+        x:{grid:{color:C.grid},ticks:{color:C.text2,font:{size:11}},title:{display:true,text:'Loss %',color:C.text2}},
+        y:{grid:{color:C.grid},ticks:{color:C.text2,font:{size:11},callback:v=>v+'%'},title:{display:true,text:'Required Recovery %',color:C.text2}}
+      }
+    }
+  });
+}
+
+// ─── PROSPECT THEORY CHART ────────────────────────────
+function drawProspect() {
+  const ctx=document.getElementById('prospect-chart');
+  if (!ctx) return;
+  const range=[];
+  const gains=[],losses=[];
+  for(let x=-10;x<=10;x+=0.5){
+    range.push(x);
+    if(x>=0) gains.push(Math.pow(x,0.88));
+    else gains.push(null);
+    if(x<=0) losses.push(-2.25*Math.pow(-x,0.88));
+    else losses.push(null);
+  }
+  new Chart(ctx,{
+    type:'line',
+    data:{labels:range,datasets:[
+      {data:gains,borderColor:C.green,borderWidth:2.5,pointRadius:0,tension:0.4,fill:false,spanGaps:false},
+      {data:losses,borderColor:C.red,borderWidth:2.5,pointRadius:0,tension:0.4,fill:false,spanGaps:false},
+    ]},
+    options:{responsive:true,animation:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{color:C.grid},ticks:{color:C.text2,font:{size:11},callback:(_,i)=>range[i]===0?'Reference':range[i]===5?'+Gains':range[i]===-5?'-Losses':''},title:{display:true,text:'Outcome (relative to reference point)',color:C.text2}},
+        y:{grid:{color:C.grid},ticks:{color:C.text2,font:{size:11}},title:{display:true,text:'Perceived Value',color:C.text2}}
+      }
+    },
+    plugins:[{id:'refLine',afterDraw(chart){
+      const ctx=chart.ctx,x=chart.scales.x.getPixelForValue(0);
+      ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.moveTo(x,chart.chartArea.top); ctx.lineTo(x,chart.chartArea.bottom); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle=C.text2; ctx.font='11px Inter,sans-serif'; ctx.textAlign='center';
+      ctx.fillText('Losses feel ~2× as painful as equal gains feel good',x,chart.chartArea.top+16);
+    }}]
+  });
+}
+
+// ─── INIT ─────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  // Activate home
+  document.querySelector('.nav-item').classList.add('active');
+});
+</script>
+</body>
+</html>
